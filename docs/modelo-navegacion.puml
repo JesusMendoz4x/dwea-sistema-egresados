@@ -1,0 +1,205 @@
+@startuml navegacion-general
+!pragma layout smetana
+title Sistema residentes — Modelo de navegación implementado
+left to right direction
+skinparam shadowing false
+skinparam packageStyle rectangle
+skinparam defaultFontName SansSerif
+
+rectangle "Entrada\n/index.xhtml" as Entrada
+rectangle "Iniciar sesión\n/login.xhtml" as Login
+package "Panel con sesión: Administrador o Vinculación" {
+  rectangle "Navegación compartida\nMenú lateral + barra superior" as Menu
+  rectangle "Dashboard\n/vistas/dashboard.xhtml" as Dashboard
+  package "Vacantes" {
+    rectangle "Consultar vacantes\n/vistas/vacantes/consultar.xhtml" as Consultar
+    rectangle "Publicar vacante\n/vistas/vacantes/publicar.xhtml" as Publicar
+    rectangle "Editar vacantes\n/vistas/vacantes/editar.xhtml" as Editar
+  }
+  package "Comunicación" {
+    rectangle "Mensajería\n/vistas/comunicacion/mensajeria.xhtml" as Mensajes
+    rectangle "Eventos\n/vistas/comunicacion/eventos.xhtml" as Eventos
+    rectangle "Avisos\n/vistas/comunicacion/avisos.xhtml" as Avisos
+  }
+  package "Egresados" as ModuloEgresados {
+    rectangle "Gestión de egresados [Administrador]\n/vistas/egresados/gestionEgresados.xhtml" as Egresados
+    rectangle "Credenciales\n/vistas/credenciales/index.xhtml" as Credenciales
+  }
+  package "Administración [solo Administrador]" {
+    rectangle "Usuarios y roles\n/vistas/administracion/usuarios.xhtml" as Usuarios
+    rectangle "Empresas\n/vistas/administracion/empresas.xhtml" as Empresas
+  }
+}
+rectangle "Impresión de credencial\n/vistas/credenciales/imprimir.xhtml?id={id}" as Impresion
+rectangle "Diálogo del navegador\nImprimir / guardar PDF" as PDF
+
+Entrada --> Dashboard : redirección; pasa por filtro
+Login --> Dashboard : autenticación válida\nAdministrador / Vinculación
+Login --> Login : datos incorrectos o rol sin acceso\nmensaje en la misma página
+Menu --> Dashboard
+Menu --> Consultar
+Menu --> Publicar
+Menu --> Editar
+Menu --> Mensajes
+Menu --> Eventos
+Menu --> Avisos : menú o botón superior
+Menu --> Egresados : solo Administrador autorizado
+Menu --> Credenciales
+Menu --> Usuarios : Administrador
+Menu --> Empresas : Administrador
+Menu --> Login : cerrar sesión; invalidar sesión
+Dashboard --> Publicar : acceso rápido
+Dashboard --> Consultar : acceso rápido
+Dashboard --> Credenciales : accesos de credenciales
+Dashboard --> Eventos : acceso de gestión
+Credenciales --> Impresion : Imprimir [registro con folio]
+Credenciales --> Credenciales : Imprimir [sin folio]: mensaje
+Impresion --> Credenciales : Volver
+Impresion --> PDF : Imprimir / guardar PDF
+note bottom of Menu
+  Disponible en todas las páginas de /vistas que usan
+  /templates/principal.xhtml. Permite cambiar de módulo
+  desde cualquier página, sin regresar al Dashboard.
+  Impresión usa una página independiente, sin este menú.
+end note
+note bottom of Egresados
+  El enlace aparece también para Vinculación,
+  pero AccesoPanel rechaza la solicitud con HTTP 403.
+end note
+note bottom of Impresion
+  Requiere sesión y rol autorizado por /vistas/*.
+  ID inexistente o registro sin folio: muestra mensaje
+  en la misma página; conserva el botón Volver.
+end note
+legend bottom
+  Rutas relativas al contexto de la aplicación.
+  Cada rectángulo con ruta representa una página real.
+  Los paquetes agrupan módulos, no son páginas.
+  Fuente: XHTML, AAcceso, ACredencial, AImpresionCredencial y AccesoPanel.
+endlegend
+@enduml
+
+@startuml acceso-y-sesion
+title Sistema residentes — Acceso, roles y sesión
+start
+:Solicitar /index.xhtml o una página /vistas/*;
+if (¿Entrada index.xhtml?) then (Sí)
+  :Redirigir a /vistas/dashboard.xhtml;
+endif
+:Filtro AccesoPanel sobre /vistas/*;
+if (¿Existe usuarioPanel en sesión?) then (No)
+  :Redirigir a /login.xhtml\nTambién para solicitudes AJAX;
+  :Capturar correo y contraseña;
+  if (¿Autenticación válida y rol\nAdministrador o Vinculación?) then (Sí)
+    :Invalidar sesión previa\nGuardar usuarioPanel en nueva sesión;
+    :Redirigir al Dashboard;
+  else (No)
+    :Mostrar error en login\nPermanecer para reintentar;
+    stop
+  endif
+else (Sí)
+  if (¿Rol Administrador o Vinculación?) then (No)
+    :HTTP 403;
+    stop
+  endif
+endif
+if (¿Ruta /administracion/* o\n/egresados/gestionEgresados.xhtml?) then (Sí)
+  if (¿Administrador?) then (No)
+    :HTTP 403\nSin redirección implementada;
+    stop
+  endif
+endif
+:Mostrar página solicitada\nNavegar mediante menú y accesos;
+if (¿Cerrar sesión?) then (Sí)
+  :Invalidar sesión\nRedirigir a /login.xhtml;
+else (No)
+  :Continuar navegación\nCada nueva solicitud a /vistas/* pasa por el filtro;
+endif
+stop
+note right
+  Sesión: 30 minutos de inactividad (web.xml).
+  Tras expirar, la siguiente solicitud protegida
+  redirige al login. No se conserva una ruta de retorno:
+  el acceso válido siempre lleva al Dashboard.
+end note
+@enduml
+
+@startuml operaciones-en-pantalla
+!pragma layout smetana
+title Sistema residentes — Componentes y navegación interna
+left to right direction
+skinparam shadowing false
+skinparam packageStyle rectangle
+package "Composición de las páginas" {
+  rectangle "Consultar / Publicar / Editar vacantes" as Vacantes
+  rectangle "Mensajería" as Mensajeria
+  rectangle "Gestión de egresados [Administrador]" as Egresados
+  rectangle "Usuarios y roles [Administrador]" as Usuarios
+  rectangle "Empresas [Administrador]" as Empresas
+  rectangle "Eventos" as Eventos
+  rectangle "Avisos" as Avisos
+  rectangle "Credenciales" as Credenciales
+}
+package "Componentes incrustados: templates/gestion/*.xhtml" {
+  rectangle "Vacante.xhtml" as CV
+  rectangle "Empresa.xhtml" as CE
+  rectangle "Mensaje.xhtml" as CM
+  rectangle "Conversacion.xhtml" as CC
+  rectangle "Egresado.xhtml" as CG
+  rectangle "Usuario.xhtml" as CU
+  rectangle "Evento.xhtml" as CEV
+  rectangle "Notificacion.xhtml" as CN
+  rectangle "Credencial.xhtml" as CCRE
+}
+Vacantes ..> CV : incluye
+Vacantes ..> CE : incluye
+Mensajeria ..> CM : incluye
+Mensajeria ..> CC : incluye
+Egresados ..> CG : incluye
+Egresados ..> CU : incluye
+Usuarios ..> CU : incluye
+Empresas ..> CE : incluye
+Eventos ..> CEV : incluye
+Avisos ..> CN : incluye
+Credenciales ..> CCRE : incluye
+
+package "Interacción común dentro de cada componente (AJAX)" {
+  rectangle "Listado y formulario nuevo" as Lista
+  rectangle "Formulario con registro seleccionado" as Formulario
+  rectangle "Confirmación del navegador" as Confirmar
+  Lista --> Lista : Actualizar / filtrar donde disponible
+  Lista --> Formulario : Editar una fila
+  Formulario --> Lista : Nuevo / cancelar edición
+  Lista --> Lista : Guardar alta válida\nactualizar listado y limpiar formulario
+  Formulario --> Lista : Guardar edición válida\nactualizar listado y limpiar formulario
+  Lista --> Confirmar : Eliminar una fila
+  Formulario --> Confirmar : Eliminar una fila
+  Confirmar --> Lista : aceptar; eliminación correcta
+  Confirmar --> Lista : cancelar; sin eliminar\nconserva formulario previo
+  Lista --> Lista : validación o error: mensaje\nconservar datos para corregir
+  Formulario --> Formulario : validación o error: mensaje\nconservar datos para corregir
+}
+note bottom of CE
+  Empresas también se gestiona dentro de Vacantes.
+  Vinculación puede abrir estas páginas, aunque
+  /administracion/empresas.xhtml es solo de Administrador.
+end note
+note bottom of CV
+  Las tres páginas de vacantes incluyen los mismos
+  componentes completos: listado, alta, edición y borrado.
+  Editar una fila carga el formulario en la página actual;
+  no navega a /vacantes/editar.xhtml.
+end note
+note bottom of CCRE
+  Imprimir es la operación que cambia de página:
+  abre /vistas/credenciales/imprimir.xhtml?id={id}
+  cuando el registro tiene folio.
+end note
+legend bottom
+  Las flechas punteadas indican inclusión, no enlaces de navegación.
+  Los estados de interacción se aplican a los nueve componentes.
+  Cancelar una confirmación conserva el estado previo de la página.
+  Los errores al eliminar permanecen en el estado previo y muestran mensaje.
+  No se representan templates como páginas independientes del menú.
+endlegend
+@enduml

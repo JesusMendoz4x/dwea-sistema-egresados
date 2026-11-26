@@ -1,0 +1,5 @@
+.gestion-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:18px; margin:16px 0; }
+.gestion-grid label { display:block; font-weight:600; margin-bottom:6px; }
+.gestion-grid input,.gestion-grid textarea,.gestion-grid .ui-selectonemenu { width:100%; box-sizing:border-box; }
+.gestion-actions { display:flex; gap:12px; flex-wrap:wrap; margin:18px 0 6px; }
+.ui-datatable-tablewrapper { overflow-x:auto; }

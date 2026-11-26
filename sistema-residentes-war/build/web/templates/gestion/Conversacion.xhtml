@@ -1,0 +1,20 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui">
+<h:form id="gestionConversacion">
+<p:messages id="mensajes" showDetail="true"/>
+<p:commandButton value="Actualizar registros y opciones" action="#{aConversacion.cargar}" process="@this" update="@form" style="margin-bottom:12px"/>
+
+<p:panel header="Conversaciones" style="margin-bottom:20px">
+<p:dataTable value="#{aConversacion.registros}" var="fila" paginator="true" rows="10" emptyMessage="No hay registros. Crea uno en el formulario inferior.">
+<p:column headerText="Asunto" filterBy="#{fila.asunto}" filterMatchMode="contains"><h:outputText value="#{fila.asunto}"/></p:column>
+<p:column headerText="Participante 1" filterBy="#{fila.idUsuario1.nombre}" filterMatchMode="contains"><h:outputText value="#{fila.idUsuario1.nombre}"/></p:column>
+<p:column headerText="Participante 2" filterBy="#{fila.idUsuario2.nombre}" filterMatchMode="contains"><h:outputText value="#{fila.idUsuario2.nombre}"/></p:column>
+<p:column headerText="Acciones"><p:commandButton value="Editar" action="#{aConversacion.editar(fila)}" process="@this" update="@form" resetValues="true"/><p:commandButton value="Eliminar" action="#{aConversacion.eliminar(fila)}" process="@this" update="@form" onclick="if (!confirm('¿Eliminar este registro?')) return false;"/></p:column>
+</p:dataTable></p:panel>
+<p:panel header="Nuevo registro / edición">
+<div class="gestion-grid">
+<div><h:outputLabel for="campo0" value="Asunto"/><p:inputText id="campo0" value="#{aConversacion.actual.asunto}" required="true" label="Asunto" maxlength="255"/></div>
+<div><h:outputLabel for="campo1" value="Participante 1"/><p:selectOneMenu id="campo1" value="#{aConversacion.idUsuario1}" required="true" label="Participante 1"><f:selectItem itemLabel="Selecciona..." itemValue="#{null}" noSelectionOption="true"/><f:selectItems value="#{aConversacion.opcionesUsuario}" var="op" itemLabel="#{op.nombre}" itemValue="#{op.idUsuario}"/></p:selectOneMenu></div>
+<div><h:outputLabel for="campo2" value="Participante 2"/><p:selectOneMenu id="campo2" value="#{aConversacion.idUsuario2}" required="true" label="Participante 2"><f:selectItem itemLabel="Selecciona..." itemValue="#{null}" noSelectionOption="true"/><f:selectItems value="#{aConversacion.opcionesUsuario}" var="op" itemLabel="#{op.nombre}" itemValue="#{op.idUsuario}"/></p:selectOneMenu></div>
+</div><div class="gestion-actions"><p:commandButton value="Guardar" action="#{aConversacion.guardar}" process="@form" update="@form"/>
+<p:commandButton value="Nuevo / cancelar edición" action="#{aConversacion.nuevo}" process="@this" update="@form" resetValues="true"/></div>
+</p:panel></h:form></ui:composition>

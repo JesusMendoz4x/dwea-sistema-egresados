@@ -1,0 +1,80 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui">
+<h:form id="gestionChat">
+    <p:messages id="errores" showDetail="false"/>
+    <div class="chat-panel">
+        <aside class="chat-conversaciones" aria-label="Tus conversaciones">
+            <div class="chat-lista-cabecera">
+                <div><h2>Conversaciones</h2><span>Tu espacio de vinculación</span></div>
+                <p:commandButton id="actualizar" value="Actualizar" icon="ui-icon-refresh" title="Actualizar conversaciones" styleClass="chat-actualizar" action="#{aChat.actualizar}" process="@this" update=":gestionChat:listaConversaciones :gestionChat:cabecera :gestionChat:mensajes :gestionChat:errores" onstart="Chat.recordarScroll()" oncomplete="Chat.restaurarScroll()"/>
+            </div>
+            <div class="chat-busqueda">
+                <h:outputLabel for="busqueda" value="Buscar conversación" styleClass="chat-etiqueta"/>
+                <p:inputText id="busqueda" value="#{aChat.busqueda}" placeholder="Buscar por persona o asunto">
+                    <p:ajax event="keyup" delay="300" process="@this" update=":gestionChat:listaConversaciones"/>
+                </p:inputText>
+            </div>
+            <h:panelGroup id="listaConversaciones" layout="block" styleClass="chat-lista">
+                <ui:repeat value="#{aChat.conversacionesFiltradas}" var="conversacion">
+                    <p:commandLink action="#{aChat.seleccionar(conversacion)}" process="@this" update=":gestionChat:listaConversaciones :gestionChat:cabecera :gestionChat:mensajes :gestionChat:compositor :gestionChat:errores" resetValues="true" oncomplete="Chat.irAlFinal()" styleClass="chat-conversacion #{aChat.estaSeleccionada(conversacion) ? 'chat-conversacion-activa' : ''}">
+                        <span class="chat-avatar" aria-hidden="true"><h:outputText value="#{aChat.iniciales(conversacion)}"/></span>
+                        <span class="chat-conversacion-info">
+                            <strong><h:outputText value="#{aChat.destinatario(conversacion)}"/></strong>
+                            <span><h:outputText value="#{conversacion.asunto}"/></span>
+                            <small><h:outputText value="#{conversacion.fechaUltimActividad}"><f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Mexico_City"/></h:outputText></small>
+                        </span>
+                    </p:commandLink>
+                </ui:repeat>
+                <h:panelGroup layout="block" rendered="#{empty aChat.conversacionesFiltradas}" styleClass="chat-lista-vacia">
+                    <h:outputText value="#{empty aChat.busqueda ? 'Aún no tienes conversaciones.' : 'No hay conversaciones que coincidan.'}"/>
+                </h:panelGroup>
+            </h:panelGroup>
+            <div class="chat-lista-pie"><h:link value="Gestionar conversaciones" outcome="/vistas/comunicacion/conversaciones"/></div>
+        </aside>
+        <section class="chat-hilo" aria-label="Conversación seleccionada">
+            <h:panelGroup id="cabecera" layout="block" styleClass="chat-cabecera">
+                <h:panelGroup layout="block" rendered="#{not empty aChat.seleccionada}" styleClass="chat-contacto">
+                    <span class="chat-avatar" aria-hidden="true"><h:outputText value="#{aChat.iniciales(aChat.seleccionada)}"/></span>
+                    <div class="chat-contacto-info"><h2><h:outputText value="#{aChat.destinatario(aChat.seleccionada)}"/></h2><p><h:outputText value="#{aChat.seleccionada.asunto}"/></p></div>
+                    <span class="chat-estado"><h:outputText value="#{aChat.seleccionada.estadoConversacion}"/></span>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{empty aChat.seleccionada}"><h2>Mensajería</h2></h:panelGroup>
+            </h:panelGroup>
+            <h:panelGroup id="mensajes" layout="block" styleClass="chat-mensajes">
+                <h:panelGroup layout="block" rendered="#{empty aChat.seleccionada}" styleClass="chat-vacio">
+                    <span class="chat-vacio-icono" aria-hidden="true">&#9993;</span>
+                    <h3>Elige una conversación</h3>
+                    <p>Selecciona una persona en la lista para ver sus mensajes. Puedes crear una conversación desde Conversaciones.</p>
+                </h:panelGroup>
+                <h:panelGroup layout="block" rendered="#{not empty aChat.seleccionada and empty aChat.mensajes}" styleClass="chat-vacio">
+                    <h3>El primer mensaje empieza aquí</h3><p>Escribe abajo para iniciar la conversación.</p>
+                </h:panelGroup>
+                <div role="log" aria-label="Historial de mensajes" aria-live="polite" aria-relevant="additions text">
+                    <ui:repeat value="#{aChat.mensajes}" var="mensaje">
+                        <article class="chat-mensaje #{aChat.esPropio(mensaje) ? 'chat-mensaje-propio' : 'chat-mensaje-recibido'}">
+                            <div class="chat-burbuja">
+                                <span class="chat-autor"><h:outputText value="#{aChat.esPropio(mensaje) ? 'Tú' : mensaje.idUsuario.nombre}"/></span>
+                                <div class="chat-contenido"><h:outputText value="#{mensaje.contenido}"/></div>
+                                <time class="chat-fecha"><h:outputText value="#{mensaje.fechaHoraEnvio}"><f:convertDateTime pattern="dd/MM/yyyy · HH:mm" timeZone="America/Mexico_City"/></h:outputText></time>
+                            </div>
+                        </article>
+                    </ui:repeat>
+                </div>
+            </h:panelGroup>
+            <h:panelGroup id="compositor" layout="block" styleClass="chat-compositor">
+                <h:panelGroup layout="block" rendered="#{aChat.puedeEnviar}">
+                    <h:outputLabel for="contenido" value="Tu mensaje" styleClass="chat-etiqueta"/>
+                    <div class="chat-redaccion">
+                        <p:inputTextarea id="contenido" value="#{aChat.contenido}" rows="2" autoResize="false" maxlength="1000" required="true" requiredMessage="Escribe un mensaje antes de enviar." label="Mensaje" placeholder="Escribe un mensaje…" onkeydown="return Chat.teclado(event)"/>
+                        <p:commandButton id="enviar" value="Enviar" icon="ui-icon-arrowthick-1-e" styleClass="chat-enviar" action="#{aChat.enviar}" process="@this contenido" update=":gestionChat:listaConversaciones :gestionChat:cabecera :gestionChat:mensajes :gestionChat:compositor :gestionChat:errores" oncomplete="if (!args.validationFailed) Chat.irAlFinal()"/>
+                    </div>
+                    <p class="chat-ayuda">Ctrl + Enter para enviar · Hasta 1000 caracteres</p>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{not aChat.puedeEnviar}"><p class="chat-ayuda"><h:outputText value="#{empty aChat.seleccionada ? 'Selecciona una conversación para escribir.' : 'Esta conversación está cerrada.'}"/></p></h:panelGroup>
+            </h:panelGroup>
+        </section>
+    </div>
+    <p:blockUI block="compositor" trigger="enviar"/>
+    <p:poll interval="10" listener="#{aChat.actualizar}" process="@this" update=":gestionChat:listaConversaciones :gestionChat:cabecera :gestionChat:mensajes :gestionChat:errores" onstart="Chat.recordarScroll()" oncomplete="Chat.restaurarScroll()"/>
+</h:form>
+<script type="text/javascript" src="#{request.contextPath}/resource/js/chat.js"></script>
+</ui:composition>

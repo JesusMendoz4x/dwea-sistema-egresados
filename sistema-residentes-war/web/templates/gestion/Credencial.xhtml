@@ -1,0 +1,15 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui">
+<h:form id="gestionCredencial"><p:messages showDetail="true"/>
+<p:commandButton value="Actualizar" action="#{aCredencial.cargar}" process="@this" update="@form"/>
+<p:panel header="Credenciales"><p:dataTable rowStyleClass="registro-#{fila.idCredencial}" value="#{aCredencial.registros}" var="fila" paginator="true" rows="10" emptyMessage="No hay registros.">
+<p:column headerText="Egresado" filterBy="#{fila.egresado.idUsuario.nombre}" filterMatchMode="contains"><h:outputText value="#{fila.egresado.idUsuario.nombre}"/></p:column>
+<p:column headerText="Estado" filterBy="#{fila.estado}" filterMatchMode="contains"><h:outputText value="#{fila.estado}"/></p:column>
+<p:column headerText="Observaciones" filterBy="#{fila.observaciones}" filterMatchMode="contains"><h:outputText value="#{fila.observaciones}"/></p:column>
+<p:column headerText="Acciones"><p:commandButton value="Editar" action="#{aCredencial.editar(fila)}" process="@this" update="@form" resetValues="true"/>
+<p:commandButton value="Eliminar" action="#{aCredencial.eliminar(fila)}" process="@this" update="@form" onclick="if (!confirm('¿Eliminar este registro?')) return false;"/>
+<p:commandButton value="Imprimir" immediate="true" action="#{aCredencial.imprimir(fila)}" process="@this" ajax="false"/></p:column></p:dataTable></p:panel><p:panel header="Solicitud de credencial"><div class="ficha ficha-credencial">
+<fieldset><legend>Titular</legend><div class="gestion-grid"><div><h:outputLabel for="campo0" value="Egresado"/><p:selectOneMenu id="campo0" value="#{aCredencial.egresado}" required="true" label="Egresado"><f:selectItem itemLabel="Selecciona..." itemValue="#{null}" noSelectionOption="true"/><f:selectItems value="#{aCredencial.opcionesEgresado}" var="op" itemLabel="#{op.idUsuario.nombre}" itemValue="#{op.idEgresado}"/></p:selectOneMenu></div></div></fieldset>
+<fieldset><legend>Seguimiento</legend><div class="gestion-grid"><div><h:outputLabel for="campo1" value="Estado"/><p:selectOneMenu id="campo1" value="#{aCredencial.actual.estado}" required="true" label="Estado"><f:selectItem itemLabel="Selecciona..." itemValue="#{null}" noSelectionOption="true"/><f:selectItems value="#{aCatalogos.estadosCredencial}"/></p:selectOneMenu></div>
+<div class="campo-ancho"><h:outputLabel for="campo2" value="Observaciones"/><p:inputTextarea id="campo2" value="#{aCredencial.actual.observaciones}" required="false" label="Observaciones" rows="3" maxlength="1000"/></div></div></fieldset>
+</div><div class="gestion-actions"><p:commandButton value="Guardar" action="#{aCredencial.guardar}" update="@form" process="@form"/>
+<p:commandButton value="Nuevo / cancelar" action="#{aCredencial.nuevo}" update="@form" process="@this" resetValues="true"/></div></p:panel></h:form></ui:composition>
