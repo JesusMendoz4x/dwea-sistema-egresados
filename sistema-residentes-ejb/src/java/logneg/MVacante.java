@@ -16,7 +16,6 @@ public class MVacante {
     }
     public List<Empresa> consultarEmpresa() { return daoEmpresa.findAll(); }
     public List<String> sugerirPuestos() { return dao.sugerirPuestos(); }
-    public List<String> sugerirUbicaciones() { return dao.sugerirUbicaciones(); }
     public List<Usuario> consultarUsuario() { return daoUsuario.findAll(); }
     public void guardar(Vacante dato, Integer idEmpresa, Integer idUsuario) {
         validarTexto("Puesto", dato.getPuesto(), 255, true);

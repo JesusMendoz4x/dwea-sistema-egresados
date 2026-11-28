@@ -1134,3 +1134,107 @@ body {
     overflow-wrap: anywhere;
     white-space: pre-wrap;
 }
+
+.ficha-vacante .gestion-grid {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+.ficha-vacante .ui-selectonemenu {
+    min-width: 0;
+    max-width: 100%;
+    box-shadow: none;
+}
+
+.ficha-vacante .ui-selectonemenu .ui-selectonemenu-label {
+    width: 100%;
+    padding: 8px 2.75rem 8px 11px;
+    margin: 0;
+    background: var(--surface);
+    color: var(--text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ficha-vacante .ui-selectonemenu .ui-selectonemenu-trigger {
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    padding: 0;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.ficha-vacante .ui-selectonemenu-trigger .ui-icon {
+    margin: 0;
+}
+
+.vacante-requisitos-control {
+    display: flex;
+    min-width: 0;
+}
+
+.vacante-requisitos-control > .vacante-autocompletar {
+    flex: 1;
+}
+
+.vacante-requisitos-abrir {
+    flex: 0 0 2.25rem;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    background: var(--surface-alt);
+    color: var(--primary-hover);
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.vacante-requisitos-abrir:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+.gestion-grid .vacante-autocompletar {
+    display: flex;
+    min-width: 0;
+}
+
+.gestion-grid .vacante-autocompletar > .ui-autocomplete-input,
+.gestion-grid .vacante-autocompletar > .ui-autocomplete-multiple-container {
+    flex: 1;
+    width: 0;
+    min-width: 0;
+}
+
+.gestion-grid .vacante-autocompletar > .ui-autocomplete-dropdown {
+    position: relative;
+    flex: 0 0 2.25rem;
+    width: 2.25rem;
+    height: auto;
+    margin: 0;
+    background: var(--surface-alt);
+    box-shadow: none;
+}
+
+.gestion-grid .vacante-autocompletar > .ui-autocomplete-dropdown:hover,
+.vacante-requisitos-abrir:hover {
+    background: var(--primary-soft);
+}
+
+.gestion-grid .vacante-autocompletar .ui-autocomplete-input-token {
+    max-width: 100%;
+}
+
+.gestion-grid .vacante-autocompletar .ui-autocomplete-token {
+    max-width: calc(100% - 4px);
+}
+
+.gestion-grid .vacante-autocompletar .ui-autocomplete-token-label {
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+.ficha-vacante .vacante-autocompletar .ui-autocomplete-token {
+    background: var(--primary-soft);
+    border: 1px solid var(--border-strong);
+    color: var(--primary-hover);
+    box-shadow: none;
+    text-shadow: none;
+}
