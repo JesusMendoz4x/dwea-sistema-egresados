@@ -6,6 +6,7 @@
             var titulo = enlace.closest('.ui-panelmenu-panel').querySelector('.ui-panelmenu-header');
             PF('menuPrincipal').expandRootSubmenu(jQuery(titulo), true);
             titulo.setAttribute('aria-expanded', 'true');
+            titulo.classList.add('seccion-actual');
         }
 
         var contenido = document.querySelector('.page-content');

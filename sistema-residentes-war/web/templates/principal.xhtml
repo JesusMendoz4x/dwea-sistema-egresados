@@ -23,17 +23,15 @@
             <aside class="sidebar" id="sidebar">
 
                 <div class="sidebar-header">
-                    <div class="brand">
-                        <span class="brand-name">AdminPanel</span>
-                    </div>
+                    <span class="brand-name">Gestión de egresados</span>
                 </div>
 
-                <nav class="sidebar-navigation">
+                <nav class="sidebar-navigation" aria-label="Menú principal">
                     <h:form id="menuForm">
                         <p:panelMenu widgetVar="menuPrincipal" styleClass="sidebar-menu">
 
-                            <p:submenu label="General" icon="ui-icon-home">
-                                <p:menuitem value="Dashboard" icon="ui-icon-home"
+                            <p:submenu label="Inicio" icon="ui-icon-home">
+                                <p:menuitem value="Resumen" icon="ui-icon-home"
                                             outcome="/vistas/dashboard" styleClass="#{view.viewId eq '/vistas/dashboard.xhtml' ? 'opcion-actual' : ''}"/>
                             </p:submenu>
 
@@ -83,21 +81,20 @@
 
             <div class="main-content">
 
-                <header class="topbar" style="padding: 10px 20px; border-bottom: 1px solid #d9d9d9; background: #ffffff;">
-                    <table style="width: 100%; border-collapse: collapse; border: none;">
-                        <tr>
-                            <td style="text-align: left; vertical-align: middle;">
-                                <span style="font-weight: bold; font-size: 1.1em; color: #333;">
-                                    Sistema Administrativo - Gestión y Vinculación
-                                </span>
-                            </td>
-                            <td style="text-align: right; vertical-align: middle; width: 120px;">
-                                <h:form id="formNotif" style="margin: 0; padding: 0;">
-                                    <p:button value="Avisos" outcome="/vistas/comunicacion/avisos" icon="ui-icon-mail-closed"/>
-                                </h:form>
-                            </td>
-                        </tr>
-                    </table>
+                <header class="topbar">
+                    <span class="topbar-title">Sistema Administrativo - Gestión y Vinculación</span>
+                    <div class="topbar-actions">
+                        <h:form id="formNotif">
+                            <p:button value="Avisos" outcome="/vistas/comunicacion/avisos" icon="ui-icon-mail-closed"/>
+                        </h:form>
+                        <div class="topbar-logos">
+                            <img src="#{request.contextPath}/resource/img/ITO.png" width="44" height="42"
+                                 alt="Instituto Tecnológico de Oaxaca"/>
+                            <span aria-hidden="true"></span>
+                            <img src="#{request.contextPath}/resource/img/TecNM.png" width="106" height="52"
+                                 alt="Tecnológico Nacional de México"/>
+                        </div>
+                    </div>
                 </header>
 
                 <main class="page-content">
