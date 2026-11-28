@@ -15,18 +15,20 @@ body {
     font: 1rem/1.55 "Source Sans 3", "Segoe UI", sans-serif;
 }
 
-.barra, .vacante, .cuenta-menu { background: #fff; }
+.vacante, .cuenta-menu { background: #fff; }
 
-.barra {
-    position: sticky;
-    top: 0;
+.portal-egresados-header {
+    display: block;
+    position: relative;
     z-index: 1;
+    background: #fff;
     border-bottom: 1px solid var(--portal-borde);
 }
 
-.barra-contenido {
-    display: flex;
-    flex-wrap: wrap;
+.portal-egresados-header > .barra-contenido {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas: "logos menu cuenta";
     align-items: center;
     gap: 4px clamp(12px, 3vw, 32px);
     width: min(calc(100% - 32px), 68rem);
@@ -35,62 +37,88 @@ body {
     padding-block: 4px;
 }
 
-.marca, .barra-enlace, .cuenta summary {
-    color: var(--portal-azul);
-    font-weight: 650;
-}
-
-.marca, .barra-enlace { text-decoration: none; }
-
-.marca {
-    display: inline-flex;
+.barra-contenido > .portal-logos-institucionales {
+    grid-area: logos;
+    justify-self: start;
+    display: flex;
     align-items: center;
-    gap: 14px;
-    min-height: 44px;
+    gap: 10px;
 }
 
-.marca-logos {
-    display: inline-flex;
-    flex: none;
-    align-items: center;
-    gap: 8px;
+.portal-logos-institucionales::before {
+    content: "";
+    order: 1;
+    width: 1px;
+    height: 36px;
+    background: var(--portal-borde);
 }
 
-.marca-logos img {
+.portal-logos-institucionales img {
     display: block;
     height: auto;
 }
 
-.marca-separador {
-    width: 1px;
-    height: 26px;
-    background: var(--portal-borde);
-}
-
-.marca-nombre {
-    font-size: .95rem;
-    line-height: 1.2;
+.portal-logos-institucionales img:last-child {
+    order: 2;
 }
 
 @media (max-width: 560px) {
-    .marca { flex-basis: 100%; }
+    .portal-logos-institucionales img:first-child { width: 46px; }
+    .portal-logos-institucionales img:last-child { width: 108px; }
 }
 
+.barra-enlace, .cuenta summary {
+    color: #4c6074;
+    font: 400 .875rem/1.4 Arial, sans-serif;
+}
+
+.barra-enlace { text-decoration: none; }
+
 .barra-enlace {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     padding: 10px 12px;
     border-bottom: 2px solid transparent;
+}
+
+.barra-enlace::before {
+    content: "";
+    width: 16px;
+    height: 16px;
+    flex: none;
+    background: currentColor;
+    mask: var(--icono-menu) center / contain no-repeat;
+}
+
+.barra-enlace-vacantes {
+    --icono-menu: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%20width%3D%2216%22%20height%3D%2216%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%20%3Crect%20x%3D%223%22%20y%3D%223%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%3E%3C%2Frect%3E%3Cpath%20d%3D%22M7%207h6M7%2010h6M7%2013h4%22%3E%3C%2Fpath%3E%20%3C%2Fsvg%3E");
+}
+
+.barra-enlace-noticias {
+    --icono-menu: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%20width%3D%2216%22%20height%3D%2216%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%20%3Crect%20x%3D%223%22%20y%3D%224%22%20width%3D%2214%22%20height%3D%2212%22%20rx%3D%222%22%3E%3C%2Frect%3E%3Cpath%20d%3D%22M6%207h4v4H6zM12%207h2m-2%203h2M6%2013h8%22%3E%3C%2Fpath%3E%20%3C%2Fsvg%3E");
+}
+
+.barra-enlace-notificaciones {
+    --icono-menu: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%20width%3D%2216%22%20height%3D%2216%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%20%3Cpath%20d%3D%22M7.5%2016a2.5%202.5%200%200%200%205%200M15%208a5%205%200%200%200-10%200c0%203-1%204-2%205h14c-1-1-2-2-2-5Z%22%3E%3C%2Fpath%3E%20%3C%2Fsvg%3E");
+}
+
+.barra-enlace-perfil {
+    --icono-menu: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%20width%3D%2216%22%20height%3D%2216%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%20%3Ccircle%20cx%3D%2210%22%20cy%3D%227%22%20r%3D%223%22%3E%3C%2Fcircle%3E%3Cpath%20d%3D%22M4%2017v-1a6%206%200%200%201%2012%200v1%22%3E%3C%2Fpath%3E%20%3C%2Fsvg%3E");
 }
 
 .barra-enlace:hover { background: var(--portal-suave); }
 
 .barra-enlace[aria-current="page"] {
+    color: var(--portal-azul);
+    font-weight: 600;
     border-bottom-color: var(--portal-naranja);
 }
 
 .cuenta {
+    grid-area: cuenta;
     position: relative;
-    margin-inline-start: auto;
+    justify-self: end;
 }
 
 .cuenta summary {
@@ -169,6 +197,7 @@ h1 {
 .detalle { white-space: pre-wrap; }
 
 .barra-navegacion {
+    grid-area: menu;
     display: flex;
     flex-wrap: wrap;
 }
@@ -179,9 +208,11 @@ h1 {
 .portal-perfil dd { margin: 0 0 12px; }
 
 @media (max-width: 760px) {
-    .barra-navegacion {
-        order: 1;
-        width: 100%;
+    .portal-egresados-header > .barra-contenido {
+        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-areas:
+            "logos cuenta"
+            "menu menu";
     }
 
     .barra-enlace { padding-inline: 8px; }

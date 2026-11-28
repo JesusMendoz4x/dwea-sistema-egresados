@@ -9,26 +9,22 @@
     <link rel="stylesheet" href="#{request.contextPath}/resource/css/portal-egresado.css"/>
 </h:head>
 <h:body>
-    <header class="barra">
+    <h:panelGroup id="cabeceraPortal" layout="block" styleClass="portal-egresados-header" pt:role="banner">
         <div class="barra-contenido">
-            <h:link outcome="/vistas/egresado/vacantes" styleClass="marca" pt:aria-label="Feed del portal de egresados">
-                <span class="marca-logos">
-                    <img src="#{request.contextPath}/resource/img/ITO.png" width="38" height="37"
-                         alt="Instituto Tecnológico de Oaxaca"/>
-                    <span class="marca-separador" aria-hidden="true"></span>
-                    <img src="#{request.contextPath}/resource/img/TecNM.png" width="92" height="46"
-                         alt="Tecnológico Nacional de México"/>
-                </span>
-                <span class="marca-nombre">Portal de egresados</span>
-            </h:link>
+            <div class="portal-logos-institucionales">
+                <img src="#{request.contextPath}/resource/img/ITO.png" width="56" height="54"
+                     alt="Instituto Tecnológico de Oaxaca"/>
+                <img src="#{request.contextPath}/resource/img/TecNM.png" width="132" height="65"
+                     alt="Tecnológico Nacional de México"/>
+            </div>
             <nav class="barra-navegacion" aria-label="Navegación del portal">
-                <h:link value="Feed" outcome="/vistas/egresado/vacantes" styleClass="barra-enlace"
+                <h:link value="Feed" outcome="/vistas/egresado/vacantes" styleClass="barra-enlace barra-enlace-vacantes"
                         pt:aria-current="#{view.viewId eq '/vistas/egresado/vacantes.xhtml' ? 'page' : 'false'}"/>
-                <h:link value="Noticias" outcome="/vistas/egresado/noticias" styleClass="barra-enlace"
+                <h:link value="Noticias" outcome="/vistas/egresado/noticias" styleClass="barra-enlace barra-enlace-noticias"
                         pt:aria-current="#{view.viewId eq '/vistas/egresado/noticias.xhtml' ? 'page' : 'false'}"/>
-                <h:link value="Notificaciones" outcome="/vistas/egresado/notificaciones" styleClass="barra-enlace"
+                <h:link value="Notificaciones" outcome="/vistas/egresado/notificaciones" styleClass="barra-enlace barra-enlace-notificaciones"
                         pt:aria-current="#{view.viewId eq '/vistas/egresado/notificaciones.xhtml' ? 'page' : 'false'}"/>
-                <h:link value="Mi perfil" outcome="/vistas/egresado/perfil" styleClass="barra-enlace"
+                <h:link value="Mi perfil" outcome="/vistas/egresado/perfil" styleClass="barra-enlace barra-enlace-perfil"
                         pt:aria-current="#{view.viewId eq '/vistas/egresado/perfil.xhtml' ? 'page' : 'false'}"/>
             </nav>
             <details class="cuenta">
@@ -41,10 +37,10 @@
                 </div>
             </details>
         </div>
-    </header>
+    </h:panelGroup>
 
-    <main class="contenedor">
+    <h:panelGroup id="contenidoPortal" layout="block" styleClass="contenedor" pt:role="main">
         <ui:insert name="content"/>
-    </main>
+    </h:panelGroup>
 </h:body>
 </html>
