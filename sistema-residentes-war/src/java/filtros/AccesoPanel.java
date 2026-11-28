@@ -9,6 +9,13 @@ import java.io.IOException;import javax.servlet.*;import javax.servlet.annotatio
  String login=r.getContextPath()+"/login.xhtml";
  if("partial/ajax".equals(r.getHeader("Faces-Request"))){s.setContentType("text/xml;charset=UTF-8");s.getWriter().write("<?xml version=\"1.0\" encoding=\"UTF-8\"?><partial-response><redirect url=\""+login+"\"/></partial-response>");}
  else{s.sendRedirect(login);}return;}
+ String vista = r.getServletPath() + (r.getPathInfo() == null ? "" : r.getPathInfo());
+ boolean portalEgresado = vista.startsWith("/vistas/egresado/");
+ if (portalEgresado) {
+     if ("Egresado".equals(u.getRol())) chain.doFilter(req, res);
+     else s.sendError(403);
+     return;
+ }
  if(!"Administrador".equals(u.getRol())&&!"Vinculación".equals(u.getRol())){s.sendError(403);return;}
  if((r.getRequestURI().contains("/administracion/")||r.getRequestURI().contains("/gestionEgresados.xhtml"))&&!"Administrador".equals(u.getRol())){s.sendError(403);return;}
  chain.doFilter(req,res);

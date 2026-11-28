@@ -11,6 +11,9 @@ public class MVacante {
     @EJB private EmpresaFacade daoEmpresa;
     @EJB private UsuarioFacade daoUsuario;
     public List<Vacante> consultar() { return dao.findAll(); }
+    public List<Vacante> consultarVigentesPublicadas() {
+        return dao.consultarVigentesPublicadas();
+    }
     public List<Empresa> consultarEmpresa() { return daoEmpresa.findAll(); }
     public List<Usuario> consultarUsuario() { return daoUsuario.findAll(); }
     public void guardar(Vacante dato, Integer idEmpresa, Integer idUsuario) {

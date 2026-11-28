@@ -1,29 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<html xmlns="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:p="http://primefaces.org/ui">
 
-    <!-- Resto de tu código -->
-
-
     <h:head>
-        <title>Iniciar Sesion</title>
+        <title>Iniciar sesión | Sistema de egresados</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <link rel="stylesheet"
               type="text/css"   
-              href="#{request.contextPath}/resource/css/estilos.css"/>    </h:head>
+              href="#{request.contextPath}/resource/css/estilos.css"/>
+        <script src="#{request.contextPath}/resource/js/login.js" defer="defer"></script>
+    </h:head>
 
     <h:body>
 
-        <div class="login-container">
+        <main class="login-container">
 
             <div class="login-box">
 
-                <h2 class="login-title">Bienvenido</h2>
+                <div class="login-logos">
+                    <img class="login-logo-ito" width="52" height="50" src="#{request.contextPath}/resource/img/ITO.png" alt="Instituto Tecnológico de Oaxaca"/>
+                    <span class="login-logo-separador" aria-hidden="true"></span>
+                    <img class="login-logo-tecnm" width="136" height="67" src="#{request.contextPath}/resource/img/TecNM.png" alt="Tecnológico Nacional de México"/>
+                </div>
+
+                <h1 class="login-title">Iniciar sesión</h1>
 
                 <p class="login-subtitle">
-                    Ingresa tus credenciales
+                    Accede al sistema de egresados.
                 </p>
 
                 <h:form id="acceso">
@@ -31,24 +37,27 @@
                     <p:messages id="messages"/>
 
                     <div class="login-field">
-                        <p:outputLabel for="correo"
+                        <h:outputLabel for="correo"
                                        value="Correo electrónico"/>
 
                         <p:inputText id="correo" value="#{aAcceso.correo}" required="true" label="Correo"
-                                     placeholder="usuario@correo.com"
-                                     style="width:100%"/>
+                                     placeholder="usuario@correo.com" pt:autocomplete="username" pt:inputmode="email"/>
                     </div>
 
                     <div class="login-field">
-                        <p:outputLabel for="password"
+                        <h:outputLabel for="password"
                                        value="Contraseña"/>
 
-                        <p:password id="password" value="#{aAcceso.clave}" required="true" label="Contraseña"
-                                    placeholder="Tu contraseña"
-                                    style="width:100%"/>
+                        <div class="login-password">
+                            <p:password id="password" value="#{aAcceso.clave}" required="true"
+                                        label="Contraseña" pt:autocomplete="current-password"/>
+                            <button id="ver-contrasena" class="login-password-toggle" type="button"
+                                    aria-controls="acceso:password" aria-label="Mostrar contraseña"
+                                    hidden="hidden"><span class="login-eye" aria-hidden="true"></span></button>
+                        </div>
                     </div>
 
-                    <p:commandButton value="Iniciar sesión"
+                    <p:commandButton value="Entrar"
                                      styleClass="login-button"
                                      action="#{aAcceso.entrar}" ajax="false"/>
 
@@ -56,7 +65,7 @@
 
             </div>
 
-        </div>
+        </main>
 
     </h:body>
 </html>

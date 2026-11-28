@@ -4,6 +4,7 @@
  */
 package dao;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -22,6 +23,16 @@ public class VacanteFacade extends AbstractFacade<Vacante> {
     @Override
     protected EntityManager getEntityManager() {
         return em;
+    }
+
+    public List<Vacante> consultarVigentesPublicadas() {
+        return em.createQuery(
+                "SELECT v FROM Vacante v JOIN FETCH v.idEmpresa "
+                + "WHERE v.vigencia >= CURRENT_DATE AND EXISTS "
+                + "(SELECT p.idPublicacionVacante FROM PublicacionVacante p "
+                + "WHERE p.idVacante = v AND p.fechaPublicacion <= CURRENT_DATE) "
+                + "ORDER BY v.vigencia, v.puesto, v.idVacante", Vacante.class)
+                .getResultList();
     }
 
     public VacanteFacade() {

@@ -1,0 +1,41 @@
+body {
+    margin: 0;
+    background: #edf3f6;
+    color: #192f3b;
+    font: 1rem/1.55 "Source Sans 3", "Segoe UI", sans-serif;
+}
+.contenedor { width: min(90%, 54rem); margin-inline: auto; }
+.barra { background: #10364b; color: #fff; }
+.barra .contenedor {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: .75rem;
+    padding-block: .85rem;
+    font-weight: 700;
+}
+.barra input {
+    padding: .45rem .85rem;
+    border: 1px solid #b6d9e6;
+    border-radius: .3rem;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+}
+.barra input:focus-visible { outline: 3px solid #ffd787; outline-offset: 3px; }
+main { padding-block: 2rem; }
+h1 { margin: 0 0 1.5rem; font-size: clamp(1.8rem, 5vw, 2.65rem); }
+.vacante {
+    margin-bottom: 1rem;
+    padding: 1.25rem;
+    border: 1px solid #c9dce5;
+    border-inline-start: .3rem solid #22768d;
+    background: #fff;
+    overflow-wrap: anywhere;
+}
+.vacante h2, .vacante p { margin: 0 0 .5rem; }
+.vacante h3 { margin: 1rem 0 .35rem; font-size: 1rem; }
+.empresa { color: #24586b; font-weight: 700; }
+.detalle { white-space: pre-wrap; }
