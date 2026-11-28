@@ -9,6 +9,8 @@ import javax.ejb.*;
 import javax.faces.view.ViewScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.component.UIComponent;
+import javax.faces.validator.ValidatorException;
 import javax.inject.Named;
 @Named("aVacante")
 @ViewScoped
@@ -95,6 +97,21 @@ public class AVacante implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Registro guardado."));
         } catch (Exception ex) { error(ex); }
     }
+    public Date getVigenciaMinima() {
+        return Date.from(MVacante.primeraVigenciaPermitida().atStartOfDay(MVacante.ZONA_VIGENCIA).toInstant());
+    }
+
+    public TimeZone getZonaVigencia() {
+        return TimeZone.getTimeZone(MVacante.ZONA_VIGENCIA);
+    }
+
+    public void validarVigencia(FacesContext contexto, UIComponent componente, Object valor) {
+        if (valor instanceof Date && !MVacante.esVigenciaValida((Date) valor)) {
+            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    MVacante.MENSAJE_VIGENCIA, null));
+        }
+    }
+
     public String formatearVigencia(Date vigencia) {
         return vigencia == null ? "Sin fecha" : new java.text.SimpleDateFormat("dd/MM/yyyy").format(vigencia);
     }

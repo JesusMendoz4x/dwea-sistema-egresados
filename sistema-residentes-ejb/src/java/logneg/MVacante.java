@@ -1,11 +1,16 @@
 package logneg;
 import dao.*;
 import modelo.*;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 import javax.ejb.*;
 @Stateless
 @LocalBean
 public class MVacante {
+    public static final ZoneId ZONA_VIGENCIA = ZoneId.of("America/Mexico_City");
+    public static final String MENSAJE_VIGENCIA = "La vigencia debe ser posterior a la fecha de hoy.";
     @EJB private VacanteFacade dao;
     @EJB private PublicacionVacanteFacade publicaciones;
     @EJB private EmpresaFacade daoEmpresa;
@@ -29,6 +34,7 @@ public class MVacante {
         if (refidUsuario == null) throw new IllegalArgumentException("Selecciona un registro existente para responsable.");
         dato.setIdUsuario(refidUsuario);
         if (dato.getVigencia() == null) throw new IllegalArgumentException("La vigencia es obligatoria.");
+        if (!esVigenciaValida(dato.getVigencia())) throw new IllegalArgumentException(MENSAJE_VIGENCIA);
         if (dato.getIdVacante() == null) {
             dao.create(dato);
             PublicacionVacante publicacion = new PublicacionVacante();
@@ -38,6 +44,18 @@ public class MVacante {
         }
         else { if (dao.find(dato.getIdVacante()) == null) throw new IllegalArgumentException("El registro ya no existe."); dao.edit(dato); }
     }
+    public static LocalDate primeraVigenciaPermitida() {
+        return LocalDate.now(ZONA_VIGENCIA).plusDays(1);
+    }
+
+    public static boolean esVigenciaValida(Date fecha) {
+        if (fecha == null) {
+            return false;
+        }
+        LocalDate dia = Instant.ofEpochMilli(fecha.getTime()).atZone(ZONA_VIGENCIA).toLocalDate();
+        return !dia.isBefore(primeraVigenciaPermitida());
+    }
+
     private void validarTexto(String campo, String texto, int maximo, boolean obligatorio) {
         if (obligatorio && (texto == null || texto.matches("(?U)\\s*"))) {
             throw new IllegalArgumentException("Completa el campo " + campo + ".");
