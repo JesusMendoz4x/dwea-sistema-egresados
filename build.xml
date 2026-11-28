@@ -10,6 +10,16 @@
 <project name="sistema-residentes" default="default" basedir="." xmlns:ear="http://www.netbeans.org/ns/j2ee-earproject/2">
     <description>Builds, tests, and runs the project sistema-residentes.</description>
     <import file="nbproject/build-impl.xml"/>
+    <target name="post-run-deploy" if="client.url">
+        <!-- Payara can begin a second deployment shortly after the first completes. -->
+        <sleep seconds="3"/>
+        <waitfor maxwait="30" maxwaitunit="second" checkevery="500"
+                 checkeveryunit="millisecond" timeoutproperty="login.unavailable">
+            <http url="${client.url}" requestMethod="GET" errorsBeginAt="400"
+                  readTimeout="2000"/>
+        </waitfor>
+        <fail if="login.unavailable" message="Payara no pudo servir ${client.url} después del despliegue."/>
+    </target>
     <!--
 
     There exist several targets which are by default empty and which can be 

@@ -4,7 +4,7 @@
 <p:commandButton value="#{aVacante.consulta ? 'Actualizar vacantes' : 'Actualizar opciones'}" action="#{aVacante.cargar}" process="@this" update="@form" style="margin-bottom:12px"/>
 
 <p:panel header="Vacantes" rendered="#{not aVacante.publicacion}" style="margin-bottom:20px">
-<p:dataTable value="#{aVacante.registros}" var="fila" paginator="true" rows="10" emptyMessage="No hay vacantes registradas.">
+<p:dataTable rowStyleClass="registro-#{fila.idVacante}" value="#{aVacante.registros}" var="fila" paginator="true" rows="10" emptyMessage="No hay vacantes registradas.">
 <p:column headerText="Puesto" filterBy="#{fila.puesto}" filterMatchMode="contains"><h:outputText value="#{fila.puesto}"/></p:column>
 <p:column headerText="Descripción" filterBy="#{fila.descripcion}" filterMatchMode="contains"><h:outputText value="#{fila.descripcion}"/></p:column>
 <p:column headerText="Requisitos" filterBy="#{fila.requisitos}" filterMatchMode="contains"><h:outputText value="#{fila.requisitos}"/></p:column>
@@ -16,14 +16,14 @@
 </p:dataTable></p:panel>
 <h:panelGroup layout="block" rendered="#{aVacante.edicion and not aVacante.registroSeleccionado}"><p>Selecciona Editar en una fila para modificar la vacante.</p></h:panelGroup>
 <p:panel header="#{aVacante.publicacion ? 'Publicar vacante' : 'Editar vacante'}" rendered="#{aVacante.publicacion or (aVacante.edicion and aVacante.registroSeleccionado)}">
-<div class="gestion-grid">
-<div><h:outputLabel for="campo0" value="Puesto"/><p:inputText id="campo0" value="#{aVacante.actual.puesto}" required="true" label="Puesto" maxlength="255"/></div>
-<div><h:outputLabel for="campo1" value="Descripción"/><p:inputTextarea id="campo1" value="#{aVacante.actual.descripcion}" required="true" label="Descripción" rows="3" maxlength="1000"/></div>
-<div><h:outputLabel for="campo2" value="Requisitos"/><p:inputText id="campo2" value="#{aVacante.actual.requisitos}" required="false" label="Requisitos" maxlength="255"/></div>
-<div><h:outputLabel for="campo3" value="Ubicación"/><p:inputText id="campo3" value="#{aVacante.actual.ubicacion}" required="true" label="Ubicación" maxlength="255"/></div>
-<div><h:outputLabel for="campo4" value="Vigencia"/><p:calendar id="campo4" value="#{aVacante.actual.vigencia}" required="true" label="Vigencia" pattern="dd/MM/yyyy" navigator="true"/></div>
-<div><h:outputLabel for="campo5" value="Empresa"/><p:selectOneMenu id="campo5" value="#{aVacante.idEmpresa}" required="true" label="Empresa"><f:selectItem itemLabel="Selecciona..." itemValue="#{null}" noSelectionOption="true"/><f:selectItems value="#{aVacante.opcionesEmpresa}" var="op" itemLabel="#{op.nombre}" itemValue="#{op.idEmpresa}"/></p:selectOneMenu></div>
-<div><h:outputLabel for="campo6" value="Responsable"/><p:selectOneMenu id="campo6" value="#{aVacante.idUsuario}" required="true" label="Responsable"><f:selectItem itemLabel="Selecciona..." itemValue="#{null}" noSelectionOption="true"/><f:selectItems value="#{aVacante.opcionesUsuario}" var="op" itemLabel="#{op.nombre}" itemValue="#{op.idUsuario}"/></p:selectOneMenu></div>
+<div class="ficha ficha-vacante">
+<fieldset><legend>Descripción del puesto</legend><div class="gestion-grid"><div class="campo-ancho"><h:outputLabel for="campo0" value="Puesto"/><p:inputText id="campo0" value="#{aVacante.actual.puesto}" required="true" label="Puesto" maxlength="255"/></div>
+<div class="campo-ancho"><h:outputLabel for="campo1" value="Descripción"/><p:inputTextarea id="campo1" value="#{aVacante.actual.descripcion}" required="true" label="Descripción" rows="3" maxlength="1000"/></div>
+<div class="campo-ancho"><h:outputLabel for="campo2" value="Requisitos"/><p:inputText id="campo2" value="#{aVacante.actual.requisitos}" required="false" label="Requisitos" maxlength="255"/></div></div></fieldset>
+<fieldset><legend>Condiciones</legend><div class="gestion-grid"><div><h:outputLabel for="campo3" value="Ubicación"/><p:inputText id="campo3" value="#{aVacante.actual.ubicacion}" required="true" label="Ubicación" maxlength="255"/></div>
+<div><h:outputLabel for="campo4" value="Vigencia"/><p:calendar id="campo4" value="#{aVacante.actual.vigencia}" required="true" label="Vigencia" pattern="dd/MM/yyyy" navigator="true"/></div></div></fieldset>
+<fieldset><legend>Publicación</legend><div class="gestion-grid"><div><h:outputLabel for="campo5" value="Empresa"/><p:selectOneMenu id="campo5" value="#{aVacante.idEmpresa}" required="true" label="Empresa"><f:selectItem itemLabel="Selecciona..." itemValue="#{null}" noSelectionOption="true"/><f:selectItems value="#{aVacante.opcionesEmpresa}" var="op" itemLabel="#{op.nombre}" itemValue="#{op.idEmpresa}"/></p:selectOneMenu></div>
+<div><h:outputLabel for="campo6" value="Responsable"/><p:selectOneMenu id="campo6" value="#{aVacante.idUsuario}" required="true" label="Responsable"><f:selectItem itemLabel="Selecciona..." itemValue="#{null}" noSelectionOption="true"/><f:selectItems value="#{aVacante.opcionesUsuario}" var="op" itemLabel="#{op.nombre}" itemValue="#{op.idUsuario}"/></p:selectOneMenu></div></div></fieldset>
 </div><div class="gestion-actions"><p:commandButton value="#{aVacante.publicacion ? 'Publicar vacante' : 'Guardar cambios'}" action="#{aVacante.guardar}" process="@form" update="@form"/>
 <p:commandButton value="#{aVacante.publicacion ? 'Limpiar formulario' : 'Cancelar edición'}" action="#{aVacante.nuevo}" process="@this" update="@form" resetValues="true"/></div>
 </p:panel></h:form></ui:composition>
