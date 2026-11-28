@@ -1,7 +1,55 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" template="/templates/principal.xhtml">
-<ui:define name="title">Consultar vacantes</ui:define>
-<ui:define name="content">
-<div class="page-header"><div><h1>Consultar vacantes</h1><p>Consulta las vacantes registradas y utiliza los filtros para encontrar la información que necesitas.</p></div></div>
-<ui:include src="/templates/gestion/Vacante.xhtml"/>
-</ui:define>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/principal.xhtml">
+    <ui:define name="title">Consultar vacantes</ui:define>
+    <ui:define name="content">
+        <div class="page-header">
+            <div>
+                <h1>Consultar vacantes</h1>
+                <p>Usa la flecha junto al puesto para ver su descripción, requisitos y responsable.</p>
+            </div>
+        </div>
+
+        <h:form id="consultaVacantes">
+            <p:messages id="mensajes" showDetail="true"/>
+            <div class="vacantes-consulta-acciones">
+                <p:commandButton value="Actualizar vacantes" icon="ui-icon-refresh"
+                                 action="#{aVacante.cargar}" process="@this" update="@form"/>
+            </div>
+
+            <p:dataTable id="vacantes" styleClass="vacantes-consulta"
+                         value="#{aVacante.registros}" var="vacante" rowKey="#{vacante.idVacante}"
+                         paginator="true" paginatorPosition="bottom" rows="10"
+                         emptyMessage="No hay vacantes registradas.">
+                <p:column headerText="Puesto">
+                    <div class="vacantes-consulta-puesto">
+                        <p:rowToggler/>
+                        <h:outputText value="#{vacante.puesto}"/>
+                    </div>
+                </p:column>
+                <p:column headerText="Empresa">
+                    <h:outputText value="#{vacante.idEmpresa.nombre}"/>
+                </p:column>
+                <p:column headerText="Ubicación">
+                    <h:outputText value="#{vacante.ubicacion}"/>
+                </p:column>
+                <p:column headerText="Vigencia">
+                    <h:outputText value="#{aVacante.formatearVigencia(vacante.vigencia)}"
+                                  styleClass="vacantes-consulta-vigencia"/>
+                </p:column>
+                <p:rowExpansion>
+                    <dl class="vacantes-consulta-detalle">
+                        <dt>Descripción</dt>
+                        <dd><h:outputText value="#{vacante.descripcion}"/></dd>
+                        <dt>Requisitos</dt>
+                        <dd><h:outputText value="#{empty vacante.requisitos ? 'Sin requisitos especificados' : vacante.requisitos}"/></dd>
+                        <dt>Responsable</dt>
+                        <dd><h:outputText value="#{vacante.idUsuario.nombre}"/></dd>
+                    </dl>
+                </p:rowExpansion>
+            </p:dataTable>
+        </h:form>
+    </ui:define>
 </ui:composition>

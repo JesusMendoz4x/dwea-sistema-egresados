@@ -75,33 +75,52 @@ body {
     background: var(--menu-activo);
 }
 
+.sidebar.sidebar-oculta {
+    transform: translateX(-100%);
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.sidebar.sidebar-oculta + .main-content {
+    margin-left: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .sidebar.sidebar-animable {
+        transition: transform 220ms ease, visibility 220ms;
+    }
+
+    .sidebar.sidebar-animable + .main-content {
+        transition: margin-left 220ms ease;
+    }
+}
+
 .sidebar-toggle {
     flex: none;
-    margin-inline-start: auto;
     width: 36px;
     height: 36px;
-    border: 1px solid var(--menu-borde);
+    border: 1px solid var(--border-strong);
     border-radius: var(--radius-sm);
-    background: var(--menu-fondo);
-    color: var(--menu-texto);
+    background: var(--surface);
+    color: var(--primary-hover);
     cursor: pointer;
 }
 
 .sidebar-toggle span {
-    display: inline-block;
-    width: 9px;
-    height: 9px;
-    border: solid currentColor;
-    border-width: 2px 0 0 2px;
-    transform: translateY(2px) rotate(45deg);
+    display: block;
+    width: 16px;
+    height: 2px;
+    margin: auto;
+    background: currentColor;
+    box-shadow: 0 -5px currentColor, 0 5px currentColor;
 }
 
-.sidebar-toggle[aria-expanded="false"] span {
-    transform: translateY(-2px) rotate(225deg);
+.sidebar-toggle:hover {
+    background: var(--primary-soft);
 }
 
 .sidebar-toggle:focus-visible {
-    outline: 2px solid var(--menu-secundario);
+    outline: 2px solid var(--primary);
     outline-offset: 2px;
 }
 
@@ -192,6 +211,13 @@ body {
     flex-wrap: wrap;
     justify-content: flex-end;
     margin-inline-start: auto;
+}
+
+.topbar-heading {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    gap: 12px;
 }
 
 .topbar-title {
@@ -788,11 +814,29 @@ body {
 }
 
 @media (max-width: 768px) {
-    .sidebar { position: static; width: 100%; }
+    .sidebar {
+        position: static;
+        width: 100%;
+        max-height: calc(var(--header-height) + 42vh);
+        overflow: hidden;
+    }
+
+    .sidebar.sidebar-oculta {
+        max-height: 0;
+        opacity: 0;
+        transform: none;
+    }
+
     .sidebar-navigation { max-height: 42vh; }
     .main-content { margin-left: 0; }
     .topbar { padding-inline: 16px; }
     .page-content { padding: 20px 16px; }
+}
+
+@media (max-width: 768px) and (prefers-reduced-motion: no-preference) {
+    .sidebar.sidebar-animable {
+        transition: max-height 220ms ease, opacity 220ms ease, visibility 220ms;
+    }
 }
 
 /* ===== MENSAJERÍA: CONVERSACIONES E HISTORIAL ===== */
@@ -926,4 +970,68 @@ body {
     width: 100%;
     height: 3rem;
     background: var(--border);
+}
+
+/* Consultar vacantes */
+.vacantes-consulta-acciones {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 12px;
+}
+
+.vacantes-consulta .ui-datatable-tablewrapper {
+    overflow-x: auto;
+}
+
+.vacantes-consulta table {
+    min-width: 610px;
+}
+
+.vacantes-consulta thead th {
+    background: #4b5560;
+    color: #fff;
+    text-align: start;
+    text-shadow: none;
+}
+
+.vacantes-consulta-puesto {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--primary-hover);
+    font-weight: 700;
+}
+
+.vacantes-consulta-puesto .ui-row-toggler {
+    flex: none;
+}
+
+.vacantes-consulta-vigencia {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: var(--radius-sm);
+    background: var(--primary-soft);
+    color: var(--primary-hover);
+    white-space: nowrap;
+}
+
+.vacantes-consulta-detalle {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    gap: 8px 18px;
+    margin: 4px;
+    padding: 14px 18px;
+    border-inline-start: 3px solid #7697b5;
+    background: var(--surface-alt);
+}
+
+.vacantes-consulta-detalle dt {
+    color: var(--primary-hover);
+    font-weight: 600;
+}
+
+.vacantes-consulta-detalle dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
 }

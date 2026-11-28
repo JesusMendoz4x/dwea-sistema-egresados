@@ -30,10 +30,6 @@
                         <strong><h:outputText value="#{aAcceso.usuario.nombre}"/></strong>
                         <span><h:outputText value="#{aAcceso.usuario.rol}"/></span>
                     </div>
-                    <button type="button" id="menuToggle" class="sidebar-toggle" hidden="hidden"
-                            aria-label="Colapsar menú" aria-expanded="true" aria-controls="sidebarNavigation">
-                        <span aria-hidden="true"></span>
-                    </button>
                 </div>
 
                 <nav id="sidebarNavigation" data-clave-estado="#{request.contextPath}:menu-lateral:#{aAcceso.usuario.idUsuario}" class="sidebar-navigation" aria-label="Menú principal">
@@ -84,7 +80,13 @@
             <div class="main-content">
 
                 <header class="topbar">
-                    <span class="topbar-title">Sistema Administrativo - Gestión y Vinculación</span>
+                    <div class="topbar-heading">
+                        <button type="button" id="menuToggle" class="sidebar-toggle" hidden="hidden"
+                                aria-label="Ocultar panel lateral" aria-expanded="true" aria-controls="sidebar">
+                            <span aria-hidden="true"></span>
+                        </button>
+                        <span class="topbar-title">Sistema Administrativo - Gestión y Vinculación</span>
+                    </div>
                     <div class="topbar-actions">
                         <h:form id="formNotif">
                             <p:button value="Avisos" outcome="/vistas/comunicacion/avisos" icon="ui-icon-mail-closed"/>

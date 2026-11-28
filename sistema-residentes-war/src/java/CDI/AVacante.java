@@ -73,6 +73,10 @@ public class AVacante implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Registro guardado."));
         } catch (Exception ex) { error(ex); }
     }
+    public String formatearVigencia(Date vigencia) {
+        return vigencia == null ? "Sin fecha" : new java.text.SimpleDateFormat("dd/MM/yyyy").format(vigencia);
+    }
+
     public Vacante getActual() { return actual; }
     public List<Vacante> getRegistros() { return registros; }
     public Integer getIdEmpresa() { return idEmpresa; }

@@ -2,6 +2,7 @@
     function prepararMenu() {
         var menu = PF('menuPrincipal');
         var navegacion = document.getElementById('sidebarNavigation');
+        var lateral = document.getElementById('sidebar');
         var alternar = document.getElementById('menuToggle');
         var enlace = navegacion.querySelector('a.opcion-actual, .opcion-actual a');
         var tituloActual = enlace && enlace.closest('.ui-panelmenu-panel').querySelector('.ui-panelmenu-header');
@@ -33,10 +34,20 @@
             this.setAttribute('aria-expanded', this.classList.contains('ui-state-active'));
         });
 
+        var claveVisibilidad = claveEstado + ':oculto';
+        function mostrarPanel(visible) {
+            lateral.classList.toggle('sidebar-oculta', !visible);
+            lateral.inert = !visible;
+            alternar.setAttribute('aria-expanded', String(visible));
+            alternar.setAttribute('aria-label', visible ? 'Ocultar panel lateral' : 'Mostrar panel lateral');
+        }
+
+        mostrarPanel(window.sessionStorage.getItem(claveVisibilidad) !== 'true');
         alternar.addEventListener('click', function () {
-            navegacion.hidden = !navegacion.hidden;
-            alternar.setAttribute('aria-expanded', String(!navegacion.hidden));
-            alternar.setAttribute('aria-label', navegacion.hidden ? 'Expandir menú' : 'Colapsar menú');
+            var visible = lateral.classList.contains('sidebar-oculta');
+            lateral.classList.add('sidebar-animable');
+            mostrarPanel(visible);
+            window.sessionStorage.setItem(claveVisibilidad, String(!visible));
         });
         alternar.hidden = false;
     }
