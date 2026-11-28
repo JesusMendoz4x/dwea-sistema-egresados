@@ -11,7 +11,6 @@
 
         if (enlace) {
             enlace.setAttribute('aria-current', 'page');
-            tituloActual.classList.add('seccion-actual');
         }
 
         // La cookie de PrimeFaces 5 usa la ruta de la vista actual.
