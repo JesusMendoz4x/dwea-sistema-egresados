@@ -221,11 +221,88 @@ body {
 }
 
 .topbar-title {
+    margin: 0;
     font-weight: 600;
     line-height: 1.25;
     font-size: 15px;
     color: var(--primary-hover);
     letter-spacing: -0.01em;
+}
+
+.ayuda-flotante {
+    position: fixed;
+    inset-inline-end: max(20px, env(safe-area-inset-right));
+    inset-block-end: max(20px, env(safe-area-inset-bottom));
+    z-index: 1100;
+}
+
+.ayuda-flotante summary {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    margin-inline-start: auto;
+    border: 1px solid var(--border-strong);
+    border-radius: 50%;
+    background: var(--surface);
+    color: var(--primary-hover);
+    box-shadow: var(--shadow-sm);
+    font-weight: 700;
+    list-style: none;
+    cursor: pointer;
+}
+
+.ayuda-flotante summary::-webkit-details-marker {
+    display: none;
+}
+
+.ayuda-flotante summary:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+.ayuda-flotante-text {
+    position: absolute;
+    inset-block-end: 100%;
+    inset-inline-end: 0;
+    width: min(18rem, calc(100vw - 40px));
+    padding-block-end: 10px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.ayuda-flotante-text p {
+    margin: 0;
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    background: #193c5c;
+    color: #fff;
+    box-shadow: var(--shadow-sm);
+}
+
+.ayuda-flotante details[open] + .ayuda-flotante-text,
+.ayuda-flotante details:has(summary:focus-visible) + .ayuda-flotante-text {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: none;
+}
+
+@media (hover: hover) {
+    .ayuda-flotante:hover .ayuda-flotante-text {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: none;
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .ayuda-flotante-text {
+        transform: translateY(6px);
+        transition: opacity 180ms ease, transform 180ms ease, visibility 180ms;
+    }
 }
 
 .page-content {

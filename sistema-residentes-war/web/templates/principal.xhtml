@@ -7,7 +7,7 @@
 
     <h:head>
         <title>
-            <ui:insert name="title">AdminPanel</ui:insert>
+            <ui:insert name="title">Gestión y Vinculación</ui:insert>
         </title>
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -85,7 +85,7 @@
                                 aria-label="Ocultar panel lateral" aria-expanded="true" aria-controls="sidebar">
                             <span aria-hidden="true"></span>
                         </button>
-                        <span class="topbar-title">Sistema Administrativo - Gestión y Vinculación</span>
+                        <h1 class="topbar-title"><ui:insert name="title">Gestión y Vinculación</ui:insert></h1>
                     </div>
                     <div class="topbar-actions">
                         <h:form id="formNotif">
@@ -103,10 +103,19 @@
 
                 <main class="page-content">
                     <ui:insert name="content">
-                        <h1>Bienvenido</h1>
+                        <p>Bienvenido</p>
                     </ui:insert>
                 </main>
 
+            </div>
+
+            <div class="ayuda-flotante">
+                <details>
+                    <summary aria-label="Ayuda de esta vista" aria-describedby="ayudaVistaTexto">?</summary>
+                </details>
+                <div id="ayudaVistaTexto" class="ayuda-flotante-text" role="tooltip">
+                    <p><ui:insert name="ayudaVista"/></p>
+                </div>
             </div>
 
         </div>
