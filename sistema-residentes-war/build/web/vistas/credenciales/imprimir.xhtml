@@ -1,7 +1,0 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui">
-<f:metadata><f:viewParam name="id" value="#{aImpresionCredencial.id}"/><f:viewAction action="#{aImpresionCredencial.cargar}"/></f:metadata>
-<h:head><title>Credencial de egresado</title><link rel="stylesheet" type="text/css" href="#{request.contextPath}/resource/css/estilos.css"/></h:head><h:body>
-<h:panelGroup layout="block" styleClass="credencial" rendered="#{not empty aImpresionCredencial.credencial}"><h2>Credencial de egresado</h2><h3>#{aImpresionCredencial.credencial.egresado.idUsuario.nombre}</h3><p>#{aImpresionCredencial.credencial.egresado.carrera}</p><p>Folio: #{aImpresionCredencial.credencial.folio}</p><p>Emisión: <h:outputText value="#{aImpresionCredencial.credencial.fechaEmision}"><f:convertDateTime pattern="dd/MM/yyyy"/></h:outputText></p></h:panelGroup>
-<h:outputText rendered="#{empty aImpresionCredencial.credencial}" value="Credencial inexistente o todavía sin emitir."/>
-<div class="acciones"><button type="button" onclick="window.print()">Imprimir / guardar PDF</button><p:button value="Volver" outcome="/vistas/credenciales/index"/></div>
-</h:body></html>
