@@ -9,7 +9,7 @@
 <p:column headerText="Correo" filterBy="#{fila.correo}" filterMatchMode="contains"><h:outputText value="#{fila.correo}"/></p:column>
 <p:column headerText="Rol" filterBy="#{fila.rol}" filterMatchMode="contains"><h:outputText value="#{fila.rol}"/></p:column>
 <p:column headerText="Estado" filterBy="#{fila.estado}" filterMatchMode="contains"><h:outputText value="#{fila.estado}"/></p:column>
-<p:column headerText="Acciones"><p:commandButton value="Editar" action="#{aUsuario.editar(fila)}" process="@this" update="@form" resetValues="true"/><p:commandButton value="Eliminar" action="#{aUsuario.eliminar(fila)}" process="@this" update="@form" onclick="if (!confirm('¿Eliminar este usuario?')) return false;"/></p:column>
+<p:column headerText="Acciones"><p:commandButton value="Editar" action="#{aUsuario.editar(fila)}" process="@this" update="@form" resetValues="true"/><p:commandButton styleClass="accion-eliminar" value="Eliminar" action="#{aUsuario.eliminar(fila)}" process="@this" update="@form" onclick="if (!confirm('¿Eliminar este usuario?')) return false;"/></p:column>
 </p:dataTable></p:panel>
 <p:panel header="Cuenta de usuario">
 <div class="ficha ficha-usuario">
@@ -18,6 +18,6 @@
 <fieldset><legend>Acceso al panel</legend><div class="gestion-grid"><div><h:outputLabel for="campo2" value="Rol"/><p:selectOneMenu id="campo2" value="#{aUsuario.actual.rol}" required="true" label="Rol"><f:selectItem itemLabel="Selecciona..." itemValue="#{null}" noSelectionOption="true"/><f:selectItems value="#{aCatalogos.roles}"/></p:selectOneMenu></div>
 <div><h:outputLabel for="campo3" value="Estado"/><p:selectOneMenu id="campo3" value="#{aUsuario.actual.estado}" required="false" label="Estado"><f:selectItem itemLabel="Selecciona..." itemValue="#{null}" noSelectionOption="true"/><f:selectItems value="#{aCatalogos.estadosUsuario}"/></p:selectOneMenu></div>
 <div class="campo-ancho"><h:outputLabel for="clave" value="Contraseña nueva (opcional, mínimo 10 caracteres)"/><p:password id="clave" value="#{aUsuario.clave}" autocomplete="new-password"/></div></div></fieldset>
-</div><div class="gestion-actions"><p:commandButton value="Guardar" action="#{aUsuario.guardar}" process="@form" update="@form"/>
+</div><div class="gestion-actions"><p:commandButton styleClass="accion-principal" value="Guardar" action="#{aUsuario.guardar}" process="@form" update="@form"/>
 <p:commandButton value="Nuevo / cancelar edición" action="#{aUsuario.nuevo}" process="@this" update="@form" resetValues="true"/></div>
 </p:panel></h:form></ui:composition>

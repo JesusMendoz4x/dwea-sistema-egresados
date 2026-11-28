@@ -8,13 +8,13 @@
 <p:column headerText="Carrera" filterBy="#{fila.carrera}" filterMatchMode="contains"><h:outputText value="#{fila.carrera}"/></p:column>
 <p:column headerText="Año de egreso" filterBy="#{fila.añoEgreso}" filterMatchMode="contains"><h:outputText value="#{fila.añoEgreso}"/></p:column>
 <p:column headerText="Usuario" filterBy="#{fila.idUsuario.nombre}" filterMatchMode="contains"><h:outputText value="#{fila.idUsuario.nombre}"/></p:column>
-<p:column headerText="Acciones"><p:commandButton value="Editar" action="#{aEgresado.editar(fila)}" process="@this" update="@form" resetValues="true"/><p:commandButton value="Eliminar" action="#{aEgresado.eliminar(fila)}" process="@this" update="@form" resetValues="true" onclick="if (!confirm('¿Eliminar este registro de la base de datos?')) return false;"/></p:column>
+<p:column headerText="Acciones"><p:commandButton value="Editar" action="#{aEgresado.editar(fila)}" process="@this" update="@form" resetValues="true"/><p:commandButton styleClass="accion-eliminar" value="Eliminar" action="#{aEgresado.eliminar(fila)}" process="@this" update="@form" resetValues="true" onclick="if (!confirm('¿Eliminar este registro de la base de datos?')) return false;"/></p:column>
 </p:dataTable></p:panel>
 <p:panel header="Ficha de egresado">
 <div class="ficha ficha-egresado">
 <fieldset><legend>Usuario asociado</legend><div class="gestion-grid"><div><h:outputLabel for="campo2" value="Usuario"/><p:selectOneMenu id="campo2" value="#{aEgresado.idUsuario}" required="true" label="Usuario"><f:selectItem itemLabel="Selecciona..." itemValue="#{null}" noSelectionOption="true"/><f:selectItems value="#{aEgresado.opcionesUsuario}" var="op" itemLabel="#{op.nombre}" itemValue="#{op.idUsuario}"/></p:selectOneMenu></div></div></fieldset>
 <fieldset><legend>Trayectoria académica</legend><div class="gestion-grid"><div><h:outputLabel for="campo0" value="Carrera"/><p:selectOneMenu id="campo0" value="#{aEgresado.actual.carrera}" required="true" label="Carrera"><f:selectItem itemLabel="Selecciona..." itemValue="#{null}" noSelectionOption="true"/><f:selectItems value="#{aCatalogos.carreras}"/></p:selectOneMenu></div>
 <div><h:outputLabel for="campo1" value="Año de egreso"/><p:inputText id="campo1" value="#{aEgresado.actual.añoEgreso}" required="true" label="Año de egreso" maxlength="255"/></div></div></fieldset>
-</div><div class="gestion-actions"><p:commandButton value="Guardar" action="#{aEgresado.guardar}" process="@form" update="@form"/>
+</div><div class="gestion-actions"><p:commandButton styleClass="accion-principal" value="Guardar" action="#{aEgresado.guardar}" process="@form" update="@form"/>
 <p:commandButton value="Nuevo / cancelar edición" action="#{aEgresado.nuevo}" process="@this" update="@form" resetValues="true"/></div>
 </p:panel></h:form></ui:composition>

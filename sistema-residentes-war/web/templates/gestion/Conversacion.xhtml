@@ -8,13 +8,13 @@
 <p:column headerText="Asunto" filterBy="#{fila.asunto}" filterMatchMode="contains"><h:outputText value="#{fila.asunto}"/></p:column>
 <p:column headerText="Participante 1" filterBy="#{fila.idUsuario1.nombre}" filterMatchMode="contains"><h:outputText value="#{fila.idUsuario1.nombre}"/></p:column>
 <p:column headerText="Participante 2" filterBy="#{fila.idUsuario2.nombre}" filterMatchMode="contains"><h:outputText value="#{fila.idUsuario2.nombre}"/></p:column>
-<p:column headerText="Acciones"><p:commandButton value="Editar" action="#{aConversacion.editar(fila)}" process="@this" update="@form" resetValues="true"/><p:commandButton value="Eliminar" action="#{aConversacion.eliminar(fila)}" process="@this" update="@form" onclick="if (!confirm('¿Eliminar este registro?')) return false;"/></p:column>
+<p:column headerText="Acciones"><p:commandButton value="Editar" action="#{aConversacion.editar(fila)}" process="@this" update="@form" resetValues="true"/><p:commandButton styleClass="accion-eliminar" value="Eliminar" action="#{aConversacion.eliminar(fila)}" process="@this" update="@form" onclick="if (!confirm('¿Eliminar este registro?')) return false;"/></p:column>
 </p:dataTable></p:panel>
 <p:panel header="Detalles de la conversación">
 <div class="ficha ficha-conversacion">
 <fieldset><legend>Tema</legend><div class="gestion-grid"><div><h:outputLabel for="campo0" value="Asunto"/><p:inputText id="campo0" value="#{aConversacion.actual.asunto}" required="true" label="Asunto" maxlength="255"/></div></div></fieldset>
 <fieldset><legend>Participantes</legend><div class="gestion-grid"><div><h:outputLabel for="campo1" value="Participante 1"/><p:selectOneMenu id="campo1" value="#{aConversacion.idUsuario1}" required="true" label="Participante 1"><f:selectItem itemLabel="Selecciona..." itemValue="#{null}" noSelectionOption="true"/><f:selectItems value="#{aConversacion.opcionesUsuario}" var="op" itemLabel="#{op.nombre}" itemValue="#{op.idUsuario}"/></p:selectOneMenu></div>
 <div><h:outputLabel for="campo2" value="Participante 2"/><p:selectOneMenu id="campo2" value="#{aConversacion.idUsuario2}" required="true" label="Participante 2"><f:selectItem itemLabel="Selecciona..." itemValue="#{null}" noSelectionOption="true"/><f:selectItems value="#{aConversacion.opcionesUsuario}" var="op" itemLabel="#{op.nombre}" itemValue="#{op.idUsuario}"/></p:selectOneMenu></div></div></fieldset>
-</div><div class="gestion-actions"><p:commandButton value="Guardar" action="#{aConversacion.guardar}" process="@form" update="@form"/>
+</div><div class="gestion-actions"><p:commandButton styleClass="accion-principal" value="Guardar" action="#{aConversacion.guardar}" process="@form" update="@form"/>
 <p:commandButton value="Nuevo / cancelar edición" action="#{aConversacion.nuevo}" process="@this" update="@form" resetValues="true"/></div>
 </p:panel></h:form></ui:composition>

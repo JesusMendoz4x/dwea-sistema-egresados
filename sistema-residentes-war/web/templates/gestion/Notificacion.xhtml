@@ -8,13 +8,13 @@
 <p:column headerText="Título" filterBy="#{fila.titulo}" filterMatchMode="contains"><h:outputText value="#{fila.titulo}"/></p:column>
 <p:column headerText="Contenido" filterBy="#{fila.cuerpo}" filterMatchMode="contains"><h:outputText value="#{fila.cuerpo}"/></p:column>
 <p:column headerText="Destinatario" filterBy="#{fila.idUsuario.nombre}" filterMatchMode="contains"><h:outputText value="#{fila.idUsuario.nombre}"/></p:column>
-<p:column headerText="Acciones"><p:commandButton value="Editar" action="#{aNotificacion.editar(fila)}" process="@this" update="@form" resetValues="true"/><p:commandButton value="Eliminar" action="#{aNotificacion.eliminar(fila)}" process="@this" update="@form" resetValues="true" onclick="if (!confirm('¿Eliminar este registro de la base de datos?')) return false;"/></p:column>
+<p:column headerText="Acciones"><p:commandButton value="Editar" action="#{aNotificacion.editar(fila)}" process="@this" update="@form" resetValues="true"/><p:commandButton styleClass="accion-eliminar" value="Eliminar" action="#{aNotificacion.eliminar(fila)}" process="@this" update="@form" resetValues="true" onclick="if (!confirm('¿Eliminar este registro de la base de datos?')) return false;"/></p:column>
 </p:dataTable></p:panel>
 <p:panel header="Redactar aviso">
 <div class="ficha ficha-notificacion">
 <fieldset><legend>Para</legend><div class="gestion-grid"><div><h:outputLabel for="campo2" value="Destinatario"/><p:selectOneMenu id="campo2" value="#{aNotificacion.idUsuario}" required="true" label="Destinatario"><f:selectItem itemLabel="Selecciona..." itemValue="#{null}" noSelectionOption="true"/><f:selectItems value="#{aNotificacion.opcionesUsuario}" var="op" itemLabel="#{op.nombre}" itemValue="#{op.idUsuario}"/></p:selectOneMenu></div></div></fieldset>
 <fieldset><legend>Mensaje</legend><div class="gestion-grid"><div><h:outputLabel for="campo0" value="Título"/><p:inputText id="campo0" value="#{aNotificacion.actual.titulo}" required="true" label="Título" maxlength="255"/></div>
 <div><h:outputLabel for="campo1" value="Contenido"/><p:inputText id="campo1" value="#{aNotificacion.actual.cuerpo}" required="true" label="Contenido" maxlength="255"/></div></div></fieldset>
-</div><div class="gestion-actions"><p:commandButton value="Guardar" action="#{aNotificacion.guardar}" process="@form" update="@form"/>
+</div><div class="gestion-actions"><p:commandButton styleClass="accion-principal" value="Guardar" action="#{aNotificacion.guardar}" process="@form" update="@form"/>
 <p:commandButton value="Nuevo / cancelar edición" action="#{aNotificacion.nuevo}" process="@this" update="@form" resetValues="true"/></div>
 </p:panel></h:form></ui:composition>
