@@ -20,6 +20,8 @@ public class AVacante implements Serializable {
     private Integer idUsuario;
     private List<Empresa> opcionesEmpresa = Collections.emptyList();
     private List<Usuario> opcionesUsuario = Collections.emptyList();
+    private List<String> puestos = Collections.emptyList();
+    private List<String> ubicaciones = Collections.emptyList();
     private void error(Exception ex) {
         java.util.logging.Logger.getLogger(getClass().getName()).log(java.util.logging.Level.WARNING, "Operación fallida", ex);
         Throwable causa = ex;
@@ -33,6 +35,8 @@ public class AVacante implements Serializable {
             if (!isConsulta()) {
                 opcionesEmpresa = servicio.consultarEmpresa();
                 opcionesUsuario = servicio.consultarUsuario();
+                puestos = servicio.sugerirPuestos();
+                ubicaciones = servicio.sugerirUbicaciones();
             }
         } catch (Exception ex) { error(ex); }
     }
@@ -84,6 +88,8 @@ public class AVacante implements Serializable {
     public Integer getIdUsuario() { return idUsuario; }
     public void setIdUsuario(Integer value) { idUsuario = value; }
     public List<Empresa> getOpcionesEmpresa() { return opcionesEmpresa; }
+    public List<String> getPuestos() { return puestos; }
+    public List<String> getUbicaciones() { return ubicaciones; }
     public List<Usuario> getOpcionesUsuario() { return opcionesUsuario; }
     public void eliminar(Vacante dato) {
         try {

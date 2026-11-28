@@ -15,11 +15,14 @@ public class MVacante {
         return dao.consultarVigentesPublicadas();
     }
     public List<Empresa> consultarEmpresa() { return daoEmpresa.findAll(); }
+    public List<String> sugerirPuestos() { return dao.sugerirPuestos(); }
+    public List<String> sugerirUbicaciones() { return dao.sugerirUbicaciones(); }
     public List<Usuario> consultarUsuario() { return daoUsuario.findAll(); }
     public void guardar(Vacante dato, Integer idEmpresa, Integer idUsuario) {
-        if (dato.getPuesto() == null || dato.getPuesto().trim().isEmpty()) throw new IllegalArgumentException("Puesto es obligatorio.");
-        if (dato.getDescripcion() == null || dato.getDescripcion().trim().isEmpty()) throw new IllegalArgumentException("Descripción es obligatorio.");
-        if (dato.getUbicacion() == null || dato.getUbicacion().trim().isEmpty()) throw new IllegalArgumentException("Ubicación es obligatorio.");
+        validarTexto("Puesto", dato.getPuesto(), 255, true);
+        validarTexto("Descripción", dato.getDescripcion(), 1000, true);
+        validarTexto("Ubicación", dato.getUbicacion(), 255, true);
+        validarTexto("Requisitos", dato.getRequisitos(), 255, dato.getIdVacante() == null);
         Empresa refidEmpresa = idEmpresa == null ? null : daoEmpresa.find(idEmpresa);
         if (refidEmpresa == null) throw new IllegalArgumentException("Selecciona un registro existente para empresa.");
         dato.setIdEmpresa(refidEmpresa);
@@ -36,6 +39,15 @@ public class MVacante {
         }
         else { if (dao.find(dato.getIdVacante()) == null) throw new IllegalArgumentException("El registro ya no existe."); dao.edit(dato); }
     }
+    private void validarTexto(String campo, String texto, int maximo, boolean obligatorio) {
+        if (obligatorio && (texto == null || texto.matches("(?U)\\s*"))) {
+            throw new IllegalArgumentException("Completa el campo " + campo + ".");
+        }
+        if (texto != null && texto.length() > maximo) {
+            throw new IllegalArgumentException(campo + " admite hasta " + maximo + " caracteres.");
+        }
+    }
+
     public void eliminar(Integer id) {
         Vacante existente = id == null ? null : dao.find(id);
         if (existente == null) throw new IllegalArgumentException("El registro ya no existe.");

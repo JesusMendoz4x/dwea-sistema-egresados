@@ -35,6 +35,16 @@ public class VacanteFacade extends AbstractFacade<Vacante> {
                 .getResultList();
     }
 
+    public List<String> sugerirPuestos() {
+        return em.createQuery("SELECT DISTINCT v.puesto FROM Vacante v WHERE v.puesto IS NOT NULL ORDER BY v.puesto",
+                String.class).getResultList();
+    }
+
+    public List<String> sugerirUbicaciones() {
+        return em.createQuery("SELECT DISTINCT v.ubicacion FROM Vacante v WHERE v.ubicacion IS NOT NULL ORDER BY v.ubicacion",
+                String.class).getResultList();
+    }
+
     public VacanteFacade() {
         super(Vacante.class);
     }
