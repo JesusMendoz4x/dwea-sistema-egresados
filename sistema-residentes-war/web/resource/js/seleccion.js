@@ -1,13 +1,49 @@
 (function () {
-    function iniciar() {
-        var enlace = document.querySelector('.sidebar-navigation a.opcion-actual, .sidebar-navigation .opcion-actual a');
+    function prepararMenu() {
+        var menu = PF('menuPrincipal');
+        var navegacion = document.getElementById('sidebarNavigation');
+        var alternar = document.getElementById('menuToggle');
+        var enlace = navegacion.querySelector('a.opcion-actual, .opcion-actual a');
+        var tituloActual = enlace && enlace.closest('.ui-panelmenu-panel').querySelector('.ui-panelmenu-header');
+        var claveEstado = navegacion.dataset.claveEstado;
+        var estado = window.sessionStorage.getItem(claveEstado);
+        var abiertas = estado === null ? null : estado.split(',');
+
         if (enlace) {
             enlace.setAttribute('aria-current', 'page');
-            var titulo = enlace.closest('.ui-panelmenu-panel').querySelector('.ui-panelmenu-header');
-            PF('menuPrincipal').expandRootSubmenu(jQuery(titulo), true);
-            titulo.setAttribute('aria-expanded', 'true');
-            titulo.classList.add('seccion-actual');
+            tituloActual.classList.add('seccion-actual');
         }
+
+        // La cookie de PrimeFaces 5 usa la ruta de la vista actual.
+        menu.saveState = function () {
+            window.sessionStorage.setItem(claveEstado, this.expandedNodes.join(','));
+        };
+        menu.expandedNodes = [];
+        menu.headers.each(function () {
+            var titulo = jQuery(this);
+            var panel = titulo.next();
+            if (abiertas ? abiertas.includes(panel.attr('id')) : this === tituloActual) {
+                menu.expandRootSubmenu(titulo, true);
+                menu.expandedNodes.push(panel.attr('id'));
+            }
+            titulo.attr('aria-expanded', titulo.hasClass('ui-state-active'));
+        });
+        menu.saveState();
+
+        menu.headers.on('click', function () {
+            this.setAttribute('aria-expanded', this.classList.contains('ui-state-active'));
+        });
+
+        alternar.addEventListener('click', function () {
+            navegacion.hidden = !navegacion.hidden;
+            alternar.setAttribute('aria-expanded', String(!navegacion.hidden));
+            alternar.setAttribute('aria-label', navegacion.hidden ? 'Expandir menú' : 'Colapsar menú');
+        });
+        alternar.hidden = false;
+    }
+
+    function iniciar() {
+        prepararMenu();
 
         var contenido = document.querySelector('.page-content');
         var elegidas = new Map();

@@ -30,18 +30,22 @@
                         <strong><h:outputText value="#{aAcceso.usuario.nombre}"/></strong>
                         <span><h:outputText value="#{aAcceso.usuario.rol}"/></span>
                     </div>
+                    <button type="button" id="menuToggle" class="sidebar-toggle" hidden="hidden"
+                            aria-label="Colapsar menú" aria-expanded="true" aria-controls="sidebarNavigation">
+                        <span aria-hidden="true"></span>
+                    </button>
                 </div>
 
-                <nav class="sidebar-navigation" aria-label="Menú principal">
+                <nav id="sidebarNavigation" data-clave-estado="#{request.contextPath}:menu-lateral:#{aAcceso.usuario.idUsuario}" class="sidebar-navigation" aria-label="Menú principal">
                     <h:form id="menuForm">
-                        <p:panelMenu widgetVar="menuPrincipal" styleClass="sidebar-menu">
+                        <p:panelMenu id="navegacion" widgetVar="menuPrincipal" styleClass="sidebar-menu">
 
-                            <p:submenu label="Inicio" icon="ui-icon-home">
+                            <p:submenu id="inicio" label="Inicio" icon="ui-icon-home">
                                 <p:menuitem value="Resumen" icon="ui-icon-home"
                                             outcome="/vistas/dashboard" styleClass="#{view.viewId eq '/vistas/dashboard.xhtml' ? 'opcion-actual' : ''}"/>
                             </p:submenu>
 
-                            <p:submenu label="Vacantes" icon="ui-icon-suitcase">
+                            <p:submenu id="vacantes" label="Vacantes" icon="ui-icon-suitcase">
                                 <p:menuitem value="Consultar vacantes" icon="ui-icon-search"
                                             outcome="/vistas/vacantes/consultar" styleClass="#{view.viewId eq '/vistas/vacantes/consultar.xhtml' ? 'opcion-actual' : ''}"/>
                                 <p:menuitem value="Publicar vacante" icon="ui-icon-plus"
@@ -50,7 +54,7 @@
                                             outcome="/vistas/vacantes/editar" styleClass="#{view.viewId eq '/vistas/vacantes/editar.xhtml' ? 'opcion-actual' : ''}"/>
                             </p:submenu>
 
-                            <p:submenu label="Comunicación" icon="ui-icon-mail-closed">
+                            <p:submenu id="comunicacion" label="Comunicación" icon="ui-icon-mail-closed">
                                 <p:menuitem value="Mensajería" icon="ui-icon-mail-closed"
                                             outcome="/vistas/comunicacion/mensajeria" styleClass="#{view.viewId eq '/vistas/comunicacion/mensajeria.xhtml' ? 'opcion-actual' : ''}"/>
                                 <p:menuitem value="Conversaciones" icon="ui-icon-comment"
@@ -61,16 +65,16 @@
                                             outcome="/vistas/comunicacion/avisos" styleClass="#{view.viewId eq '/vistas/comunicacion/avisos.xhtml' ? 'opcion-actual' : ''}"/>
                             </p:submenu>
 
-                            <p:submenu label="Egresados" icon="ui-icon-person">
+                            <p:submenu id="egresados" label="Egresados" icon="ui-icon-person">
                                 <p:menuitem value="Gestión de egresados" icon="ui-icon-person"
                                             outcome="/vistas/egresados/gestionEgresados" styleClass="#{view.viewId eq '/vistas/egresados/gestionEgresados.xhtml' ? 'opcion-actual' : ''}" rendered="#{aAcceso.usuario.rol eq 'Administrador'}"/>
                                 <p:menuitem value="Credenciales" icon="ui-icon-person" outcome="/vistas/credenciales/index" styleClass="#{view.viewId eq '/vistas/credenciales/index.xhtml' ? 'opcion-actual' : ''}"/>
                             </p:submenu>
 
-                        <p:submenu label="Administración" icon="ui-icon-gear" rendered="#{aAcceso.usuario.rol eq 'Administrador'}">
+                        <p:submenu id="administracion" label="Administración" icon="ui-icon-gear" rendered="#{aAcceso.usuario.rol eq 'Administrador'}">
 <p:menuitem value="Usuarios y roles" outcome="/vistas/administracion/usuarios" styleClass="#{view.viewId eq '/vistas/administracion/usuarios.xhtml' ? 'opcion-actual' : ''}"/>
 <p:menuitem value="Empresas" outcome="/vistas/administracion/empresas" styleClass="#{view.viewId eq '/vistas/administracion/empresas.xhtml' ? 'opcion-actual' : ''}"/>
-</p:submenu><p:submenu label="Sesión" icon="ui-icon-person"><p:menuitem value="Cerrar sesión" action="#{aAcceso.salir}" ajax="false"/></p:submenu>
+</p:submenu><p:submenu id="sesion" label="Sesión" icon="ui-icon-person"><p:menuitem value="Cerrar sesión" action="#{aAcceso.salir}" ajax="false"/></p:submenu>
 </p:panelMenu>
                     </h:form>
                 </nav>

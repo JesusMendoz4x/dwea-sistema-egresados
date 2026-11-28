@@ -48,13 +48,11 @@
                 </p:panel>
 
                 <p:panel header="Eventos registrados"><h2>#{aDashboard.resumen.eventos}</h2></p:panel>
-                <p:panel header="Credenciales pendientes"><h2>#{aDashboard.resumen.credencialesPendientes}</h2></p:panel>
+                <p:panel header="Credenciales pendientes" styleClass="dashboard-pendientes"><h2>#{aDashboard.resumen.credencialesPendientes}</h2></p:panel>
             </h:panelGroup>
 
-            <br/>
-
             <!-- Accesos rápidos -->
-            <p:panel header="Accesos rápidos">
+            <p:panel header="Accesos rápidos" styleClass="dashboard-accesos">
 
                 <p:commandButton styleClass="accion-principal"
                     value="Publicar vacante"
@@ -76,9 +74,7 @@
 
             </p:panel>
 
-            <br/>
-
-            <p:panel header="Accesos de gestión"><p:button value="Eventos" outcome="/vistas/comunicacion/eventos"/><p:button value="Credenciales" outcome="/vistas/credenciales/index"/></p:panel>
+            <p:panel header="Accesos de gestión" styleClass="dashboard-accesos"><p:button value="Eventos" outcome="/vistas/comunicacion/eventos"/><p:button value="Credenciales" outcome="/vistas/credenciales/index"/></p:panel>
         </h:form>
 
     </ui:define>

@@ -73,6 +73,36 @@ body {
     background: var(--menu-activo);
 }
 
+.sidebar-toggle {
+    flex: none;
+    margin-inline-start: auto;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--menu-borde);
+    border-radius: var(--radius-sm);
+    background: var(--menu-fondo);
+    color: var(--primary-hover);
+    cursor: pointer;
+}
+
+.sidebar-toggle span {
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    border: solid currentColor;
+    border-width: 2px 0 0 2px;
+    transform: translateY(2px) rotate(45deg);
+}
+
+.sidebar-toggle[aria-expanded="false"] span {
+    transform: translateY(-2px) rotate(225deg);
+}
+
+.sidebar-toggle:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
 .topbar-logos {
     display: flex;
     align-items: center;
@@ -337,8 +367,35 @@ body {
 
 .dashboard-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr));
     gap: 16px;
+    margin-bottom: 22px;
+}
+
+.dashboard-cards .ui-panel {
+    margin: 0;
+    border-top: 3px solid #7697b5;
+}
+
+.dashboard-cards .ui-panel .ui-panel-titlebar,
+.dashboard-accesos.ui-panel .ui-panel-titlebar {
+    background: var(--primary-soft);
+    color: var(--primary-hover);
+}
+
+.dashboard-cards .dashboard-pendientes.ui-panel {
+    border-top-color: #b86124;
+}
+
+.dashboard-cards .dashboard-pendientes .ui-panel-titlebar {
+    background: #fcf1e7;
+    color: #753b17;
+}
+
+.dashboard-accesos.ui-panel .ui-panel-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .dashboard-cards h2 {
