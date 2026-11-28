@@ -6,9 +6,11 @@
 <h:head>
     <title><ui:insert name="title">Inicio</ui:insert> | Portal de egresados</title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <ui:insert name="estilosVista"/>
     <link rel="stylesheet" href="#{request.contextPath}/resource/css/portal-egresado.css"/>
 </h:head>
 <h:body>
+    <ui:param name="portalEnMensajeria" value="#{view.viewId eq '/vistas/egresado/mensajeria.xhtml'}"/>
     <h:panelGroup id="cabeceraPortal" layout="block" styleClass="portal-egresados-header" pt:role="banner">
         <div class="barra-contenido">
             <div class="portal-logos-institucionales">
@@ -39,8 +41,10 @@
         </div>
     </h:panelGroup>
 
-    <h:panelGroup id="contenidoPortal" layout="block" styleClass="contenedor" pt:role="main">
+    <h:panelGroup id="contenidoPortal" layout="block" styleClass="contenedor #{portalEnMensajeria ? 'contenedor-mensajes' : ''}" pt:role="main">
         <ui:insert name="content"/>
     </h:panelGroup>
+    <h:link outcome="/vistas/egresado/mensajeria" title="Mensajes" pt:aria-label="Abrir mensajes"
+            styleClass="portal-mensajes-enlace" rendered="#{not portalEnMensajeria}"/>
 </h:body>
 </html>

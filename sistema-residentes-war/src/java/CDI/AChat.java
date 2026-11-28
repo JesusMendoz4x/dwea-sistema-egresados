@@ -32,6 +32,14 @@ public class AChat implements Serializable {
                 .getSessionMap().get("usuarioPanel");
     }
     private boolean permitido() {
+        FacesContext contexto = FacesContext.getCurrentInstance();
+        if (contexto == null || contexto.getViewRoot() == null) {
+            return false;
+        }
+        if ("/vistas/egresado/mensajeria.xhtml".equals(contexto.getViewRoot().getViewId())) {
+            Usuario actual = usuario();
+            return actual != null && "Egresado".equals(actual.getRol());
+        }
         return AccesoVista.permitir("/vistas/comunicacion/mensajeria.xhtml", false);
     }
     private void error(Exception ex) {

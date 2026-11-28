@@ -28,7 +28,10 @@
                     <h:outputText value="#{empty aChat.busqueda ? 'Aún no tienes conversaciones.' : 'No hay conversaciones que coincidan.'}"/>
                 </h:panelGroup>
             </h:panelGroup>
-            <div class="chat-lista-pie"><h:link value="Gestionar conversaciones" outcome="/vistas/comunicacion/conversaciones"/></div>
+            <h:panelGroup layout="block" styleClass="chat-lista-pie"
+                          rendered="#{aAcceso.usuario.rol ne 'Egresado'}">
+                <h:link value="Gestionar conversaciones" outcome="/vistas/comunicacion/conversaciones"/>
+            </h:panelGroup>
         </aside>
         <section class="chat-hilo" aria-label="Conversación seleccionada">
             <h:panelGroup id="cabecera" layout="block" styleClass="chat-cabecera">
@@ -43,7 +46,9 @@
                 <h:panelGroup layout="block" rendered="#{empty aChat.seleccionada}" styleClass="chat-vacio">
                     <span class="chat-vacio-icono" aria-hidden="true">&#9993;</span>
                     <h3>Elige una conversación</h3>
-                    <p>Selecciona una persona en la lista para ver sus mensajes. Puedes crear una conversación desde Conversaciones.</p>
+                    <p><h:outputText value="#{aAcceso.usuario.rol eq 'Egresado'
+                        ? 'Aquí aparecerán los mensajes de tus conversaciones.'
+                        : 'Selecciona una persona en la lista para ver sus mensajes. Puedes crear una conversación desde Conversaciones.'}"/></p>
                 </h:panelGroup>
                 <h:panelGroup layout="block" rendered="#{not empty aChat.seleccionada and empty aChat.mensajes}" styleClass="chat-vacio">
                     <h3>El primer mensaje empieza aquí</h3><p>Escribe abajo para iniciar la conversación.</p>

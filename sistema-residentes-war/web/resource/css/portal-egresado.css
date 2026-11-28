@@ -27,14 +27,13 @@ body {
 
 .portal-egresados-header > .barra-contenido {
     display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     grid-template-areas: "logos menu cuenta";
     align-items: center;
     gap: 4px clamp(12px, 3vw, 32px);
-    width: min(calc(100% - 32px), 68rem);
-    margin-inline: auto;
+    width: 100%;
     min-height: 64px;
-    padding-block: 4px;
+    padding: 4px clamp(16px, 2vw, 32px);
 }
 
 .barra-contenido > .portal-logos-institucionales {
@@ -200,6 +199,8 @@ h1 {
     grid-area: menu;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px clamp(12px, 2vw, 24px);
 }
 
 .portal-perfil { margin-top: 16px; }
@@ -207,7 +208,7 @@ h1 {
 .portal-perfil dt { color: var(--portal-azul); font-weight: 650; }
 .portal-perfil dd { margin: 0 0 12px; }
 
-@media (max-width: 760px) {
+@media (max-width: 1024px) {
     .portal-egresados-header > .barra-contenido {
         grid-template-columns: minmax(0, 1fr) auto;
         grid-template-areas:
@@ -215,5 +216,67 @@ h1 {
             "menu menu";
     }
 
+    .barra-navegacion { column-gap: 8px; }
     .barra-enlace { padding-inline: 8px; }
+}
+
+.portal-mensajes-enlace {
+    position: fixed;
+    inset-inline-end: max(16px, env(safe-area-inset-right));
+    inset-block-end: max(16px, env(safe-area-inset-bottom));
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--portal-azul);
+    color: #fff;
+    box-shadow: 0 4px 16px #15365b33;
+}
+
+.portal-mensajes-enlace::before {
+    content: "";
+    width: 20px;
+    height: 16px;
+    border: 2px solid currentColor;
+    border-radius: 5px;
+}
+
+.portal-mensajes-enlace::after {
+    content: "";
+    position: absolute;
+    top: 32px;
+    left: 19px;
+    width: 6px;
+    height: 6px;
+    border: solid currentColor;
+    border-width: 0 0 2px 2px;
+    background: inherit;
+    transform: skewY(-36deg);
+}
+
+.portal-mensajes-enlace:hover {
+    background: #244d77;
+}
+
+.contenedor:not(.contenedor-mensajes) {
+    padding-block-end: 72px;
+}
+
+.contenedor-mensajes {
+    width: min(calc(100% - 32px), 68rem);
+}
+
+.portal-mensajes-cabecera {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px 20px;
+    margin-bottom: 16px;
+}
+
+.portal-mensajes-cabecera a {
+    color: var(--portal-azul);
 }

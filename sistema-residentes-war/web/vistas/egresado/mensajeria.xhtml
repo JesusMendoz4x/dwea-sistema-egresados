@@ -1,0 +1,16 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/templates/portal-egresado.xhtml">
+    <ui:define name="title">Mensajes</ui:define>
+    <ui:define name="estilosVista">
+        <link rel="stylesheet" href="#{request.contextPath}/resource/css/estilos.css"/>
+    </ui:define>
+    <ui:define name="content">
+        <div class="portal-mensajes-cabecera">
+            <h1>Mensajes</h1>
+            <h:link value="Volver al feed" outcome="/vistas/egresado/vacantes"/>
+        </div>
+        <ui:include src="/templates/gestion/Mensaje.xhtml"/>
+    </ui:define>
+</ui:composition>
