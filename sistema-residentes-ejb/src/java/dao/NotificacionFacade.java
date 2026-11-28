@@ -4,6 +4,7 @@
  */
 package dao;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -22,6 +23,14 @@ public class NotificacionFacade extends AbstractFacade<Notificacion> {
     @Override
     protected EntityManager getEntityManager() {
         return em;
+    }
+
+    public List<Notificacion> consultarDestinatario(Integer idUsuario) {
+        return em.createQuery(
+                "SELECT n FROM Notificacion n WHERE n.idUsuario.idUsuario = :idUsuario "
+                + "ORDER BY n.fechaEmision DESC, n.idNotificacion DESC", Notificacion.class)
+                .setParameter("idUsuario", idUsuario)
+                .getResultList();
     }
 
     public NotificacionFacade() {

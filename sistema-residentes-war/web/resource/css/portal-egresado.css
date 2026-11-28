@@ -1,41 +1,188 @@
+:root {
+    --portal-azul: #15365b;
+    --portal-tinta: #243344;
+    --portal-suave: #f1f4f7;
+    --portal-borde: #d9e2ea;
+    --portal-naranja: #b86124;
+}
+
+* { box-sizing: border-box; }
+
 body {
     margin: 0;
-    background: #edf3f6;
-    color: #192f3b;
+    background: var(--portal-suave);
+    color: var(--portal-tinta);
     font: 1rem/1.55 "Source Sans 3", "Segoe UI", sans-serif;
 }
-.contenedor { width: min(90%, 54rem); margin-inline: auto; }
-.barra { background: #10364b; color: #fff; }
-.barra .contenedor {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: .75rem;
-    padding-block: .85rem;
-    font-weight: 700;
+
+.barra, .vacante, .cuenta-menu { background: #fff; }
+
+.barra {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    border-bottom: 1px solid var(--portal-borde);
 }
-.barra input {
-    padding: .45rem .85rem;
-    border: 1px solid #b6d9e6;
-    border-radius: .3rem;
-    background: transparent;
-    color: inherit;
+
+.barra-contenido {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px clamp(12px, 3vw, 32px);
+    width: min(calc(100% - 32px), 68rem);
+    margin-inline: auto;
+    min-height: 64px;
+    padding-block: 4px;
+}
+
+.marca, .barra-enlace, .cuenta summary {
+    color: var(--portal-azul);
+    font-weight: 650;
+}
+
+.marca, .barra-enlace { text-decoration: none; }
+
+.marca {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    min-height: 44px;
+}
+
+.marca-logos {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: 8px;
+}
+
+.marca-logos img {
+    display: block;
+    height: auto;
+}
+
+.marca-separador {
+    width: 1px;
+    height: 26px;
+    background: var(--portal-borde);
+}
+
+.marca-nombre {
+    font-size: .95rem;
+    line-height: 1.2;
+}
+
+@media (max-width: 560px) {
+    .marca { flex-basis: 100%; }
+}
+
+.barra-enlace {
+    display: inline-block;
+    padding: 10px 12px;
+    border-bottom: 2px solid transparent;
+}
+
+.barra-enlace:hover { background: var(--portal-suave); }
+
+.barra-enlace[aria-current="page"] {
+    border-bottom-color: var(--portal-naranja);
+}
+
+.cuenta {
+    position: relative;
+    margin-inline-start: auto;
+}
+
+.cuenta summary {
+    padding: 10px 0;
+    cursor: pointer;
+}
+
+.cuenta-menu {
+    position: absolute;
+    top: 100%;
+    inset-inline-end: 0;
+    width: min(16rem, calc(100vw - 32px));
+    padding: 14px;
+    border: 1px solid var(--portal-borde);
+    border-radius: 8px;
+    box-shadow: 0 8px 24px #15365b1a;
+    overflow-wrap: anywhere;
+}
+
+.cuenta-menu input {
+    margin-top: 10px;
+    min-height: 42px;
+    padding-inline: 12px;
+    border: 1px solid var(--portal-borde);
+    border-radius: 4px;
+    background: #fff;
+    color: var(--portal-azul);
     font: inherit;
     cursor: pointer;
 }
-.barra input:focus-visible { outline: 3px solid #ffd787; outline-offset: 3px; }
-main { padding-block: 2rem; }
-h1 { margin: 0 0 1.5rem; font-size: clamp(1.8rem, 5vw, 2.65rem); }
+
+:focus-visible {
+    outline: 2px solid var(--portal-azul);
+    outline-offset: 2px;
+}
+
+.contenedor {
+    width: min(calc(100% - 32px), 42rem);
+    margin-inline: auto;
+    padding-block: clamp(24px, 5vw, 48px);
+}
+
+h1 {
+    margin: 0;
+    color: var(--portal-azul);
+    font-size: clamp(2rem, 6vw, 2.8rem);
+    line-height: 1.15;
+}
+
+.feed-titulo {
+    margin: 16px 0;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--portal-borde);
+    font-size: 1.15rem;
+}
+
 .vacante {
-    margin-bottom: 1rem;
-    padding: 1.25rem;
-    border: 1px solid #c9dce5;
-    border-inline-start: .3rem solid #22768d;
-    background: #fff;
+    margin-bottom: 14px;
+    padding: clamp(16px, 4vw, 24px);
+    border: 1px solid var(--portal-borde);
+    border-radius: 8px;
     overflow-wrap: anywhere;
 }
-.vacante h2, .vacante p { margin: 0 0 .5rem; }
-.vacante h3 { margin: 1rem 0 .35rem; font-size: 1rem; }
-.empresa { color: #24586b; font-weight: 700; }
+
+.vacante h3 {
+    margin: 0 0 8px;
+    color: var(--portal-azul);
+    font-size: 1.35rem;
+    line-height: 1.25;
+}
+
+.vacante h4 { margin: 16px 0 4px; }
+.vacante p { margin: 0 0 8px; }
+.vacante p:last-child { margin-bottom: 0; }
+.empresa { color: #506476; font-weight: 650; }
 .detalle { white-space: pre-wrap; }
+
+.barra-navegacion {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.portal-perfil { margin-top: 16px; }
+.portal-perfil h2 { margin: 0; font-size: 1.2rem; }
+.portal-perfil dt { color: var(--portal-azul); font-weight: 650; }
+.portal-perfil dd { margin: 0 0 12px; }
+
+@media (max-width: 760px) {
+    .barra-navegacion {
+        order: 1;
+        width: 100%;
+    }
+
+    .barra-enlace { padding-inline: 8px; }
+}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+    <title><ui:insert name="title">Inicio</ui:insert> | Portal de egresados</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="#{request.contextPath}/resource/css/portal-egresado.css"/>
+</h:head>
+<h:body>
+    <header class="barra">
+        <div class="barra-contenido">
+            <h:link outcome="/vistas/egresado/vacantes" styleClass="marca" pt:aria-label="Feed del portal de egresados">
+                <span class="marca-logos">
+                    <img src="#{request.contextPath}/resource/img/ITO.png" width="38" height="37"
+                         alt="Instituto Tecnológico de Oaxaca"/>
+                    <span class="marca-separador" aria-hidden="true"></span>
+                    <img src="#{request.contextPath}/resource/img/TecNM.png" width="92" height="46"
+                         alt="Tecnológico Nacional de México"/>
+                </span>
+                <span class="marca-nombre">Portal de egresados</span>
+            </h:link>
+            <nav class="barra-navegacion" aria-label="Navegación del portal">
+                <h:link value="Feed" outcome="/vistas/egresado/vacantes" styleClass="barra-enlace"
+                        pt:aria-current="#{view.viewId eq '/vistas/egresado/vacantes.xhtml' ? 'page' : 'false'}"/>
+                <h:link value="Noticias" outcome="/vistas/egresado/noticias" styleClass="barra-enlace"
+                        pt:aria-current="#{view.viewId eq '/vistas/egresado/noticias.xhtml' ? 'page' : 'false'}"/>
+                <h:link value="Notificaciones" outcome="/vistas/egresado/notificaciones" styleClass="barra-enlace"
+                        pt:aria-current="#{view.viewId eq '/vistas/egresado/notificaciones.xhtml' ? 'page' : 'false'}"/>
+                <h:link value="Mi perfil" outcome="/vistas/egresado/perfil" styleClass="barra-enlace"
+                        pt:aria-current="#{view.viewId eq '/vistas/egresado/perfil.xhtml' ? 'page' : 'false'}"/>
+            </nav>
+            <details class="cuenta">
+                <summary>Mi cuenta</summary>
+                <div class="cuenta-menu">
+                    <strong><h:outputText value="#{aAcceso.usuario.nombre}"/></strong>
+                    <h:form>
+                        <h:commandButton value="Cerrar sesión" action="#{aAcceso.salir}" immediate="true"/>
+                    </h:form>
+                </div>
+            </details>
+        </div>
+    </header>
+
+    <main class="contenedor">
+        <ui:insert name="content"/>
+    </main>
+</h:body>
+</html>

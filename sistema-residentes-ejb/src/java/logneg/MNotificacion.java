@@ -9,6 +9,9 @@ public class MNotificacion {
     @EJB private NotificacionFacade dao;
     @EJB private UsuarioFacade daoUsuario;
     public List<Notificacion> consultar() { return dao.findAll(); }
+    public List<Notificacion> consultarDestinatario(Integer idUsuario) {
+        return dao.consultarDestinatario(idUsuario);
+    }
     public List<Usuario> consultarUsuario() { return daoUsuario.findAll(); }
     public void guardar(Notificacion dato, Integer idUsuario) {
         if (dato.getTitulo() == null || dato.getTitulo().trim().isEmpty()) throw new IllegalArgumentException("Título es obligatorio.");

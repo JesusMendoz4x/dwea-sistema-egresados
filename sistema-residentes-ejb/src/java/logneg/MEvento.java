@@ -18,6 +18,10 @@ public class MEvento {
         return dao.findAll();
     }
 
+    public List<Evento> consultarProximos() {
+        return dao.consultarProximos();
+    }
+
     public void guardar(Evento dato) {
         if (dato.getTitulo() == null || dato.getTitulo().trim().isEmpty() || dato.getFecha() == null || dato.getSede() == null || dato.getSede().trim().isEmpty()) {
             throw new IllegalArgumentException("Completa título, fecha y sede.");

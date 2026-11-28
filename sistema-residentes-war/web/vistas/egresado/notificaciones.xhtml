@@ -1,0 +1,27 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/templates/portal-egresado.xhtml">
+    <ui:define name="title">Notificaciones</ui:define>
+    <ui:define name="content">
+        <h1>Notificaciones</h1>
+        <h2 class="feed-titulo">Avisos personales</h2>
+        <h:panelGroup layout="block" rendered="#{empty aPortalComunicacion.avisos and not aPortalComunicacion.errorAvisos}">
+            Todavía no tienes avisos.
+        </h:panelGroup>
+        <h:panelGroup layout="block" pt:role="alert" rendered="#{aPortalComunicacion.errorAvisos}">
+            No pudimos cargar tus avisos. Inténtalo más tarde.
+        </h:panelGroup>
+        <ui:repeat value="#{aPortalComunicacion.avisos}" var="aviso">
+            <article class="vacante">
+                <h3><h:outputText value="#{aviso.titulo}"/></h3>
+                <p class="empresa">
+                    <h:outputText value="#{aviso.fechaEmision}"><f:convertDateTime pattern="dd/MM/yyyy" timeZone="#{aPortalComunicacion.zonaHoraria}"/></h:outputText>
+                </p>
+                <p class="detalle"><h:outputText value="#{aviso.cuerpo}"/></p>
+            </article>
+        </ui:repeat>
+    </ui:define>
+</ui:composition>

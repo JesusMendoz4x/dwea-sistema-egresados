@@ -1,0 +1,18 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/templates/portal-egresado.xhtml">
+    <ui:define name="title">Mi perfil</ui:define>
+    <ui:define name="content">
+        <h1>Mi perfil</h1>
+        <section class="vacante portal-perfil" aria-labelledby="datosCuenta">
+            <h2 id="datosCuenta">Datos de mi cuenta</h2>
+            <dl>
+                <dt>Nombre</dt>
+                <dd><h:outputText value="#{aAcceso.usuario.nombre}"/></dd>
+                <dt>Correo electrónico</dt>
+                <dd><h:outputText value="#{aAcceso.usuario.correo}"/></dd>
+            </dl>
+        </section>
+    </ui:define>
+</ui:composition>
