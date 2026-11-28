@@ -519,7 +519,6 @@ body {
     border: none;
     background: transparent;
     margin-inline-start: 13px;
-    border-inline-start: 1px solid var(--menu-borde);
     padding: 4px 0 4px 8px;
 }
 
@@ -530,11 +529,11 @@ body {
     font-size: 13px;
     box-shadow: none;
     text-shadow: none;
-    transition: color 0.15s ease;
+    transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 .sidebar-navigation .ui-panelmenu .ui-menuitem-link:hover {
-    background: transparent;
+    background: var(--menu-activo);
     color: var(--menu-texto);
     box-shadow: none;
 }
@@ -883,7 +882,7 @@ body {
 @media(max-width:600px) { .ficha .gestion-grid { grid-template-columns:minmax(0,1fr); } }
 
 .sidebar-navigation .ui-panelmenu a[aria-current="page"] {
-    background: transparent;
+    background: #172d43;
     color: var(--menu-texto);
     font-weight: 700;
     border-inline-start: 3px solid var(--menu-naranja);
