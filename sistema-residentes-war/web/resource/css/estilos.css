@@ -14,7 +14,7 @@
     --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
     --shadow-md: 0 10px 30px rgba(15, 23, 42, 0.08);
     --sidebar-width: 260px;
-    --header-height: 64px;
+    --header-height: 72px;
 }
 
 *, *::before, *::after {
@@ -63,9 +63,14 @@ body {
 }
 
 .sidebar-header {
-    padding: 16px 16px 14px;
+    display: flex;
+    align-items: center;
+    flex: none;
+    min-height: var(--header-height);
+    gap: 12px;
+    padding: 6px 16px;
     border-bottom: 1px solid var(--menu-borde);
-    text-align: center;
+    background: var(--menu-activo);
 }
 
 .topbar-logos {
@@ -86,28 +91,12 @@ body {
     background: var(--border-strong);
 }
 
-.brand-name {
-    display: block;
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--primary-hover);
-}
-
 .sidebar-navigation {
     flex: 1;
     min-height: 0;
     padding: 14px 12px;
     overflow-y: auto;
     background: var(--menu-fondo);
-}
-
-.sidebar-footer {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 14px 18px;
-    border-top: 1px solid var(--menu-borde);
-    background: var(--menu-activo);
 }
 
 .user-avatar {
@@ -160,9 +149,8 @@ body {
     flex-wrap: wrap;
     gap: 8px 20px;
     padding: 6px 28px;
-    background: rgba(255, 255, 255, 0.92);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--border);
+    background: #eaf2fa;
+    border-bottom: 1px solid var(--border-strong);
 }
 
 .topbar-actions {
@@ -176,8 +164,9 @@ body {
 
 .topbar-title {
     font-weight: 600;
+    line-height: 1.25;
     font-size: 15px;
-    color: var(--text);
+    color: var(--primary-hover);
     letter-spacing: -0.01em;
 }
 
@@ -190,7 +179,10 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 12px;
     margin-bottom: 22px;
+    padding-inline-start: 14px;
+    border-inline-start: 3px solid #7697b5;
 }
 
 .page-header h1,
@@ -199,7 +191,7 @@ body {
     font-size: 24px;
     font-weight: 700;
     letter-spacing: -0.02em;
-    color: var(--text);
+    color: var(--primary-hover);
 }
 
 .page-header p {
@@ -722,6 +714,12 @@ body {
 }
 
 /* ===== RESPONSIVE ===== */
+
+@media (min-width: 769px) {
+    .topbar { flex-wrap: nowrap; }
+    .topbar-title { min-width: 0; }
+    .topbar-actions { flex: none; }
+}
 
 @media (max-width: 768px) {
     .sidebar { position: static; width: 100%; }

@@ -23,7 +23,13 @@
             <aside class="sidebar" id="sidebar">
 
                 <div class="sidebar-header">
-                    <span class="brand-name">Gestión de egresados</span>
+                    <div class="user-avatar" aria-hidden="true">
+                        <h:outputText value="#{empty aAcceso.usuario.nombre ? '?' : aAcceso.usuario.nombre.substring(0, 1).toUpperCase()}"/>
+                    </div>
+                    <div class="user-information">
+                        <strong><h:outputText value="#{aAcceso.usuario.nombre}"/></strong>
+                        <span><h:outputText value="#{aAcceso.usuario.rol}"/></span>
+                    </div>
                 </div>
 
                 <nav class="sidebar-navigation" aria-label="Menú principal">
@@ -68,14 +74,6 @@
 </p:panelMenu>
                     </h:form>
                 </nav>
-
-                <div class="sidebar-footer">
-                    <div class="user-avatar">AD</div>
-                    <div class="user-information">
-                        <strong>#{aAcceso.usuario.nombre}</strong>
-                        <span>#{aAcceso.usuario.rol}</span>
-                    </div>
-                </div>
 
             </aside>
 
